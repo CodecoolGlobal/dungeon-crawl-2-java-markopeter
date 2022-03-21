@@ -22,6 +22,9 @@ public class MapLoader {
                 if (x < line.length()) {
                     Cell cell = map.getCell(x, y);
                     switch (line.charAt(x)) {
+                        case 'k':
+                            cell.setType(CellType.SWORD);
+                            break;
                         case ' ':
                             cell.setType(CellType.EMPTY);
                             break;
@@ -37,10 +40,6 @@ public class MapLoader {
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell));
-                            break;
-                        case 'k':
-                            cell.setType(CellType.SWORD);
                             map.setPlayer(new Player(cell));
                             break;
                         default:
