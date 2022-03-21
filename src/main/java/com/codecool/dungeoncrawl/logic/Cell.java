@@ -2,6 +2,9 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 
+// Nem kell basztatni...
+
+
 public class Cell implements Drawable {
     private CellType type;
     private Actor actor;
