@@ -43,4 +43,8 @@ public class GameMap {
     public int getHeight() {
         return height;
     }
+
+    public void setItems(Items item) {
+        this.itemList.add(item);
+    }
 }
