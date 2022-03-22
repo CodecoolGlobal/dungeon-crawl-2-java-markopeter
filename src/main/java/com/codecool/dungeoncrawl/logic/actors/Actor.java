@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Actor implements Drawable {
@@ -12,11 +13,22 @@ public abstract class Actor implements Drawable {
         this.cell.setActor(this);
     }
 
-    public void move(int dx, int dy) {
-        Cell nextCell = cell.getNeighbor(dx, dy);
+    private void move(Cell nextCell) {
         cell.setActor(null);
         nextCell.setActor(this);
         cell = nextCell;
+    }
+
+    public void checkForCollision(int dx, int dy){
+        Cell nextCell = cell.getNeighbor(dx, dy);
+        if(!(nextCell.getType() == CellType.WALL)){
+            if(nextCell.getActor() == null){
+                move(nextCell);
+            }else{
+                //TODO: remove health from both parties
+                checkForCollision(-dx,-dy);
+            }
+        }
     }
 
     public int getHealth() {
