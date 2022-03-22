@@ -5,9 +5,29 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import java.util.Random;
 
 public class Skeleton extends Actor {
+
     private final Random RANDOM = new Random();
+    private int health = 4;
+    private int damage = 2;
+
+
     public Skeleton(Cell cell) {
         super(cell);
+    }
+
+    @Override
+    public int getHealth(){
+        return health;
+    }
+
+    @Override
+    public void setHealth(int difference){
+        health += difference;
+    }
+
+    @Override
+    public int getDamage(){
+        return damage;
     }
 
     @Override

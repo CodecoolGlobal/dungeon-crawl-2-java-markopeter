@@ -8,8 +8,13 @@ import java.util.Map;
 public class Player extends Actor {
 
     private Map<Items, Integer> itemList = new LinkedHashMap<>();
+
     private Cell cell;
+    private int health = 10;
+    private int damage = 5;
+
     public Player(Cell cell) {
+
         super(cell);
     }
 
@@ -30,6 +35,25 @@ public class Player extends Actor {
             }
         }
 
+    }
+
+    @Override
+    public int getHealth(){
+        return health;
+    }
+
+    @Override
+    public void setHealth(int difference){
+        health += difference;
+    }
+
+    @Override
+    public int getDamage(){
+        return damage;
+    }
+
+    public void setDamage(int damage){
+        this.damage = damage;
     }
 
     public String getTileName() {

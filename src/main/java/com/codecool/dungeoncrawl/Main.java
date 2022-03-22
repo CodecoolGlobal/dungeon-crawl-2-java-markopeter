@@ -72,23 +72,24 @@ public class Main extends Application {
     private void onKeyPressed(KeyEvent keyEvent) {
 
         switch (keyEvent.getCode()) {
+           
             case UP:
-                map.getPlayer().move(0, -1);
+                map.getPlayer().checkForCollision(0, -1);
                 map.moveEnemy();
                 refresh();
                 break;
             case DOWN:
-                map.getPlayer().move(0, 1);
+                map.getPlayer().checkForCollision(0, 1);
                 map.moveEnemy();
                 refresh();
                 break;
             case LEFT:
-                map.getPlayer().move(-1, 0);
+                map.getPlayer().checkForCollision(-1, 0);
                 map.moveEnemy();
                 refresh();
                 break;
             case RIGHT:
-                map.getPlayer().move(1,0);
+                map.getPlayer().checkForCollision(1,0);
                 map.moveEnemy();
                 refresh();
                 break;
