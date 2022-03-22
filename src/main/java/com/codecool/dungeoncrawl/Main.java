@@ -3,7 +3,10 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Actor;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -33,7 +36,12 @@ public class Main extends Application {
         GridPane ui = new GridPane();
         Button pickUpButton = new Button();
         pickUpButton.setText("Pick up item!");
+        pickUpButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
 
+            }
+        });
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 

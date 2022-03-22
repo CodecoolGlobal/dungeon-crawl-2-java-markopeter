@@ -48,4 +48,8 @@ public abstract class Items {
         this.y = y;
     }
 
+    public void emptyCell(){
+        cell.setItem(null);
+    }
+
 }
