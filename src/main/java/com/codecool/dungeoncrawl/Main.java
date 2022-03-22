@@ -40,7 +40,10 @@ public class Main extends Application {
         pickUpButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println("TEst");
+                int x = map.getPlayer().getX();
+                int y = map.getPlayer().getY();
+                map.getPlayer().pickUpItem();
+                map.getCell(x, y).setItem(null);
             }
         });
         ui.setPrefWidth(200);
