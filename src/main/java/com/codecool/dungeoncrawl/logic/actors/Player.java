@@ -14,7 +14,12 @@ public class Player extends Actor {
     }
 
     public <T extends Items> void addToInventory(Map<Items, Integer> itemList, Items item){
-
+            T key = (T) item;
+            if(itemList.containsKey(key)){
+                itemList.replace(key,itemList.get(key) + 1);
+            } else{
+                itemList.put(key, 1);
+            }
     }
 
     public String getTileName() {
