@@ -6,7 +6,6 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Actor implements Drawable {
     private Cell cell;
-    private int health = 10;
 
     public Actor(Cell cell) {
         this.cell = cell;
@@ -25,15 +24,34 @@ public abstract class Actor implements Drawable {
             if(nextCell.getActor() == null){
                 move(nextCell);
             }else{
-                //TODO: remove health from both parties
+                fight(cell.getActor(), nextCell.getActor());
                 checkForCollision(-dx,-dy);
             }
         }
     }
 
-    public int getHealth() {
-        return health;
+    private void fight(Actor attacker, Actor attacked){
+        attacked.takeDamage(attacker.getDamage());
+        if(attacked.isAlive()){
+            attacker.takeDamage(attacked.getDamage());
+        }else{
+            attacked.getCell().setActor(null);
+        }
     }
+
+    private void takeDamage(int damageAmount){
+        setHealth(-damageAmount);
+    }
+
+    public boolean isAlive(){
+        return getHealth() > 0;
+    }
+
+    public abstract int getHealth();
+
+    public abstract void setHealth(int difference);
+
+    public abstract int getDamage();
 
     public Cell getCell() {
         return cell;
