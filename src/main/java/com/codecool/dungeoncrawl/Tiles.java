@@ -7,6 +7,10 @@ import javafx.scene.image.Image;
 import java.util.HashMap;
 import java.util.Map;
 
+// Ha szeretnénk extra karaktert vagy környezetet akkor itt tudjuk hozzáadni
+
+
+
 public class Tiles {
     public static int TILE_WIDTH = 32;
 
@@ -23,6 +27,7 @@ public class Tiles {
     }
 
     static {
+        tileMap.put("sword", new Tile(0, 31));
         tileMap.put("empty", new Tile(0, 0));
         tileMap.put("wall", new Tile(10, 17));
         tileMap.put("floor", new Tile(2, 0));

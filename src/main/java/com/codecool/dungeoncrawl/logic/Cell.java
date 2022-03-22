@@ -1,10 +1,15 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Items;
+
+// Nem kell basztatni...
+
 
 public class Cell implements Drawable {
     private CellType type;
     private Actor actor;
+    private Items item;
     private GameMap gameMap;
     private int x, y;
 
@@ -47,4 +52,7 @@ public class Cell implements Drawable {
     public int getY() {
         return y;
     }
+
+    public void setItem(Items item) { this.item = item; }
+
 }

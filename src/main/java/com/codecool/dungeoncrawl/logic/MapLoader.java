@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.actors.Swords;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -22,6 +23,10 @@ public class MapLoader {
                 if (x < line.length()) {
                     Cell cell = map.getCell(x, y);
                     switch (line.charAt(x)) {
+                        case 'k':
+                            cell.setType(CellType.SWORD);
+                            map.setItems(new Swords(cell));
+                            break;
                         case ' ':
                             cell.setType(CellType.EMPTY);
                             break;
