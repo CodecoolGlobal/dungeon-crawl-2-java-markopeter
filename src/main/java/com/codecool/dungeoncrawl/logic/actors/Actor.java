@@ -4,6 +4,8 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Actor implements Drawable {
+
+
     private Cell cell;
     private int health = 10;
 
@@ -12,12 +14,8 @@ public abstract class Actor implements Drawable {
         this.cell.setActor(this);
     }
 
-    public void move(int dx, int dy) {
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
-    }
+    public abstract void move(int dx, int dy);
+
 
     public int getHealth() {
         return health;
@@ -33,5 +31,9 @@ public abstract class Actor implements Drawable {
 
     public int getY() {
         return cell.getY();
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 }

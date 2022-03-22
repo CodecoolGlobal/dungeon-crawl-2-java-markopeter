@@ -8,7 +8,7 @@ import java.util.Map;
 public class Player extends Actor {
 
     private Map<Items, Integer> itemList = new LinkedHashMap<>();
-
+    private Cell cell;
     public Player(Cell cell) {
         super(cell);
     }
@@ -34,5 +34,14 @@ public class Player extends Actor {
 
     public String getTileName() {
         return "player";
+    }
+    @Override
+    public void move(int dx, int dy) {
+        Cell nextCell = getCell().getNeighbor(dx, dy);
+        if (nextCell.getActor() == null) {
+            getCell().setActor(null);
+            nextCell.setActor(this);
+            setCell(nextCell);
+    }
     }
 }

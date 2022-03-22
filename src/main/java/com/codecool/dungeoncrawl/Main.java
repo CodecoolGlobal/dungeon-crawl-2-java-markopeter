@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -69,27 +70,31 @@ public class Main extends Application {
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
+
         switch (keyEvent.getCode()) {
             case UP:
                 map.getPlayer().move(0, -1);
+                map.moveEnemy();
                 refresh();
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
+                map.moveEnemy();
                 refresh();
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
+                map.moveEnemy();
                 refresh();
                 break;
             case RIGHT:
                 map.getPlayer().move(1,0);
+                map.moveEnemy();
                 refresh();
                 break;
         }
     }
 
-    // The refresh method responsible to draw the items as well
 
     private void refresh() {
         context.setFill(Color.BLACK);
