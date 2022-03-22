@@ -13,7 +13,9 @@ public class Player extends Actor {
         super(cell);
     }
 
+    public <T extends Items> void addToInventory(Map<Items, Integer> itemList, Items item){
 
+    }
 
     public String getTileName() {
         return "player";
