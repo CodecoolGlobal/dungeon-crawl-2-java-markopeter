@@ -1,19 +1,17 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.Drawable;
 
-public abstract class Items {
+public abstract class Items implements Drawable {
     private String name;
-    private Cell cell;
     private int x;
     private int y;
 
     public Items(String name, Cell cell){
-        this.cell = cell;
         this.name = name;
         this.y = cell.getY();
         this.x = cell.getX();
-        this.cell.setItem(this);
     }
 
     public String getName() {
@@ -22,14 +20,6 @@ public abstract class Items {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Cell getCell() {
-        return cell;
-    }
-
-    public void setCell(Cell cell) {
-        this.cell = cell;
     }
 
     public int getX() {
@@ -47,5 +37,6 @@ public abstract class Items {
     public void setY(int y) {
         this.y = y;
     }
+
 
 }

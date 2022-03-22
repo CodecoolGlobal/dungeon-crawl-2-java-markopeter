@@ -3,7 +3,10 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Actor;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -33,7 +36,13 @@ public class Main extends Application {
         GridPane ui = new GridPane();
         Button pickUpButton = new Button();
         pickUpButton.setText("Pick up item!");
-
+        pickUpButton.setFocusTraversable(false);
+        pickUpButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("TEst");
+            }
+        });
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
@@ -77,6 +86,8 @@ public class Main extends Application {
         }
     }
 
+    // The refresh method responsible to draw the items as well
+
     private void refresh() {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -85,7 +96,10 @@ public class Main extends Application {
                 Cell cell = map.getCell(x, y);
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
-                } else {
+                }else if(cell.getItem() != null){
+                    Tiles.drawTile(context, cell.getItem(), x, y);
+                }
+                else {
                     Tiles.drawTile(context, cell, x, y);
                 }
             }

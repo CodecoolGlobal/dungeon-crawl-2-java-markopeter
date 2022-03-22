@@ -11,7 +11,7 @@ public class GameMap {
     private int height;
     private Cell[][] cells;
     private Player player;
-    private List<Items> itemList = new ArrayList<>();
+
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
@@ -44,7 +44,4 @@ public class GameMap {
         return height;
     }
 
-    public void setItems(Items item) {
-        this.itemList.add(item);
-    }
 }
