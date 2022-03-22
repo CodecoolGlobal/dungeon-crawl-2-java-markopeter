@@ -7,18 +7,18 @@ import java.util.Map;
 
 public class Player extends Actor {
 
-    private Map<Items, Integer> itemList = new LinkedHashMap<Items, Integer>();
+    private Map<Items, Integer> itemList = new LinkedHashMap<>();
 
     public Player(Cell cell) {
         super(cell);
     }
 
-    public <T extends Items> void addToInventory(Map<Items, Integer> itemList, Items item){
-            T key = (T) item;
-            if(itemList.containsKey(key)){
-                itemList.replace(key,itemList.get(key) + 1);
+    public void addToInventory(Map<Items, Integer> itemList, Items item){
+
+            if(itemList.containsKey(item)){
+                itemList.replace(item,itemList.get(item) + 1);
             } else{
-                itemList.put(key, 1);
+                itemList.put(item, 1);
             }
     }
 
