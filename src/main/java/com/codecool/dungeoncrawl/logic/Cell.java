@@ -3,7 +3,6 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Items;
 
-// Nem kell basztatni...
 
 
 public class Cell implements Drawable {
@@ -55,6 +54,8 @@ public class Cell implements Drawable {
 
     public void setItem(Items item) { this.item = item; }
 
-
+    public Items getItem() {
+        return item;
+    }
 
 }

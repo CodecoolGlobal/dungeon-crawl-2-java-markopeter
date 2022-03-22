@@ -24,8 +24,8 @@ public class MapLoader {
                     Cell cell = map.getCell(x, y);
                     switch (line.charAt(x)) {
                         case 'k':
-                            cell.setType(CellType.SWORD);
-                            map.setItems(new Swords(cell));
+                            cell.setType(CellType.FLOOR);
+                            cell.setItem(new Swords(cell));
                             break;
                         case ' ':
                             cell.setType(CellType.EMPTY);

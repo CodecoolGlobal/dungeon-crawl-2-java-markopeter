@@ -36,10 +36,11 @@ public class Main extends Application {
         GridPane ui = new GridPane();
         Button pickUpButton = new Button();
         pickUpButton.setText("Pick up item!");
+        pickUpButton.setFocusTraversable(false);
         pickUpButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
+                System.out.println("TEst");
             }
         });
         ui.setPrefWidth(200);
@@ -85,6 +86,8 @@ public class Main extends Application {
         }
     }
 
+    // The refresh method responsible to draw the items as well
+
     private void refresh() {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -93,7 +96,10 @@ public class Main extends Application {
                 Cell cell = map.getCell(x, y);
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
-                } else {
+                }else if(cell.getItem() != null){
+                    Tiles.drawTile(context, cell.getItem(), x, y);
+                }
+                else {
                     Tiles.drawTile(context, cell, x, y);
                 }
             }

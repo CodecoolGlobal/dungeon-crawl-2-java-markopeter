@@ -7,4 +7,8 @@ public class Swords extends Items{
     public Swords(Cell cell){
         super("sword", cell);
     }
+
+    public String getTileName() {
+        return "swords";
+    }
 }
