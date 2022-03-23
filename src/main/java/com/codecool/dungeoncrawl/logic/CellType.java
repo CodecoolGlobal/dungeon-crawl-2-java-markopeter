@@ -24,4 +24,8 @@ public enum CellType {
     public String getTileName() {
         return tileName;
     }
+
+    public void setSteppedOn(boolean steppedOn) {
+        this.steppedOn = steppedOn;
+    }
 }
