@@ -3,12 +3,12 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Player extends Actor {
 
-    private Map<Items, Integer> itemList = new LinkedHashMap<>();
+    private HashMap<Items, Integer> itemList = new HashMap<>();
 
     private Cell cell;
     private int health = 10;
@@ -72,6 +72,10 @@ public class Player extends Actor {
 
     public String getTileName() {
         return "player";
+    }
+
+    public HashMap<Items, Integer> getItemList(){
+        return itemList;
     }
 
 }
