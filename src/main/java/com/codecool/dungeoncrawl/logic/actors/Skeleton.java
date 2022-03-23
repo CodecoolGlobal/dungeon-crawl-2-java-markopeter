@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 
 import java.util.Random;
 
@@ -33,6 +34,16 @@ public class Skeleton extends Actor {
     @Override
     public String getTileName() {
         return "skeleton";
+    }
+
+    @Override
+    public void checkForCollision(int dx, int dy){
+        Cell nextCell = super.getCell().getNeighbor(dx, dy);
+        if(!(nextCell.getType() == CellType.WALL)){
+            if(nextCell.getActor() == null){
+                move(nextCell);
+            }
+        }
     }
 
     public int[] movement(){

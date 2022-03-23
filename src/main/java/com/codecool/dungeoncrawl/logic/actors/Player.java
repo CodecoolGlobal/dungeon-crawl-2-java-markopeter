@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -35,6 +36,19 @@ public class Player extends Actor {
             }
         }
 
+    }
+
+    @Override
+    public void checkForCollision(int dx, int dy){
+        Cell nextCell = super.getCell().getNeighbor(dx, dy);
+        if(!(nextCell.getType() == CellType.WALL)){
+            if(nextCell.getActor() == null){
+                move(nextCell);
+            }else{
+                fight(super.getCell().getActor(), nextCell.getActor());
+                checkForCollision(-dx,-dy);
+            }
+        }
     }
 
     @Override

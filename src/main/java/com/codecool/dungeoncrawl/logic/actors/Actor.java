@@ -22,19 +22,9 @@ public abstract class Actor implements Drawable {
 
 
 
-    public void checkForCollision(int dx, int dy){
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        if(!(nextCell.getType() == CellType.WALL)){
-            if(nextCell.getActor() == null){
-                move(nextCell);
-            }else{
-                fight(cell.getActor(), nextCell.getActor());
-                checkForCollision(-dx,-dy);
-            }
-        }
-    }
+    public abstract void checkForCollision(int dx, int dy);
 
-    private void fight(Actor attacker, Actor attacked){
+    public void fight(Actor attacker, Actor attacked){
         attacked.takeDamage(attacker.getDamage());
         if(attacked.isAlive()){
             attacker.takeDamage(attacked.getDamage());
