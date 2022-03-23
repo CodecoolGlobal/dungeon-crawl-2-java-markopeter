@@ -1,9 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actors.Actor;
-import com.codecool.dungeoncrawl.logic.actors.Items;
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.actors.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +14,7 @@ public class GameMap {
     List<Actor> enemies = new ArrayList<>();
 
     public GameMap(int width, int height, CellType defaultCellType) {
+
         this.width = width;
         this.height = height;
         cells = new Cell[width][height];
@@ -64,13 +62,20 @@ public class GameMap {
     }
 
     public void moveEnemy() {
+
         for (Actor enemy: enemies) {
             if(enemy.isAlive()){
                 if(enemy instanceof Skeleton){
                     int [] coord = ((Skeleton) enemy).movement();
                     enemy.checkForCollision(coord[0], coord[1]);
                 }
+                if(enemy instanceof Ghost){
+                    int [] coord = ((Ghost) enemy).ghostMove();
+                    enemy.checkForCollision(coord[0], coord[1]);
+                }
             }
         }
     }
+
 }
+
