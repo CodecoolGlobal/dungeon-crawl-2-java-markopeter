@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Player extends Actor {
 
@@ -44,6 +45,10 @@ public class Player extends Actor {
         if(!(nextCell.getType() == CellType.WALL)){
             if(nextCell.getActor() == null){
                 move(nextCell);
+            }else if(nextCell.getType() == CellType.DOOR){
+                if(hasThatKey(CellType.DOOR.getItemFunction())){
+                    move(nextCell);
+                }
             }else{
                 fight(super.getCell().getActor(), nextCell.getActor());
                 checkForCollision(-dx,-dy);
@@ -64,6 +69,16 @@ public class Player extends Actor {
     @Override
     public int getDamage(){
         return damage;
+    }
+
+    public boolean hasThatKey(String keyName){
+        Set<Items> items = itemList.keySet();
+        for(Items item: items){
+            if(item.getName().equals(keyName)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setDamage(int damage){
