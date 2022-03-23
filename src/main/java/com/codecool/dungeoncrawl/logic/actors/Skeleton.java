@@ -36,27 +36,27 @@ public class Skeleton extends Actor {
     }
 
     public int[] movement(){
-        Cell nextCell;
-        nextCell = getCell();
+        int [] randomCoordinates = new int[2];
         int direction = nextInt(4);
         switch (direction) {
             case 0:
-                nextCell = getCell().getNeighbor(0, 1);
+                randomCoordinates[0] = 0;
+                randomCoordinates[1] = 1;
                 break;
             case 1:
-                nextCell = getCell().getNeighbor(0, -1);
+                randomCoordinates[0] = 0;
+                randomCoordinates[1] = -1;
                 break;
             case 2:
-                nextCell = getCell().getNeighbor(-1, 0);
+                randomCoordinates[0] = -1;
+                randomCoordinates[1] = 0;
                 break;
             case 3:
-                nextCell = getCell().getNeighbor(1, 0);
+                randomCoordinates[0] = 1;
+                randomCoordinates[1] = 0;
                 break;
         }
 
-        int x = nextCell.getX();
-        int y = nextCell.getY();
-        int [] randomCoordinates = {x,y};
         return randomCoordinates;
     }
 
