@@ -14,7 +14,12 @@ public abstract class Actor implements Drawable {
         this.cell.setActor(this);
     }
 
-    public abstract void move(int dx, int dy);
+      void move(Cell nextCell) {
+        cell.setActor(null);
+        nextCell.setActor(this);
+        cell = nextCell;
+    }
+
 
 
     public void checkForCollision(int dx, int dy){

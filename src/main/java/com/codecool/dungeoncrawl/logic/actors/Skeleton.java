@@ -35,8 +35,7 @@ public class Skeleton extends Actor {
         return "skeleton";
     }
 
-    @Override
-    public void move(int x, int y){
+    public int[] movement(){
         Cell nextCell;
         nextCell = getCell();
         int direction = nextInt(4);
@@ -55,9 +54,10 @@ public class Skeleton extends Actor {
                 break;
         }
 
-        getCell().setActor(null);
-        nextCell.setActor(this);
-        setCell(nextCell);
+        int x = nextCell.getX();
+        int y = nextCell.getY();
+        int [] randomCoordinates = {x,y};
+        return randomCoordinates;
     }
 
     public int nextInt(int upper) {
