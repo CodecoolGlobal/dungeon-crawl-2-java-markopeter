@@ -3,8 +3,7 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
-import com.codecool.dungeoncrawl.logic.actors.Actor;
-import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.actors.Items;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,6 +19,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+import java.util.Set;
+
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
     Canvas canvas = new Canvas(
@@ -27,6 +29,9 @@ public class Main extends Application {
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Label slot1 = new Label();
+    Label slot2 = new Label();
+    Label[] inventorySlots = {slot1,slot2};
 
     public static void main(String[] args) {
         launch(args);
@@ -45,15 +50,21 @@ public class Main extends Application {
                 int y = map.getPlayer().getY();
                 map.getPlayer().pickUpItem();
                 map.getCell(x, y).setItem(null);
+                addItemsToUI();
             }
         });
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
-
         ui.add(pickUpButton, 0,3);
         ui.add(new Label("Health: "), 0, 0);
+        ui.add(new Label("Inventory: "), 0, 4);
         ui.add(healthLabel, 1, 0);
-
+        int inventoryItemStartCoordinate = 5;
+        for(Label label: inventorySlots){
+            ui.add(label, 0, inventoryItemStartCoordinate);
+            label.setText("empty");
+            inventoryItemStartCoordinate++;
+        }
 
         BorderPane borderPane = new BorderPane();
 
@@ -96,6 +107,15 @@ public class Main extends Application {
         }
     }
 
+    private void addItemsToUI(){
+        HashMap<Items, Integer> itemList = map.getPlayer().getItemList();
+        Set<Items> items = itemList.keySet();
+        int firstEmptySlot = 0;
+        for(Items key: items){
+            inventorySlots[firstEmptySlot].setText(key.getName() + ": " + itemList.get(key));
+            firstEmptySlot++;
+        }
+    }
 
     private void refresh() {
         context.setFill(Color.BLACK);
