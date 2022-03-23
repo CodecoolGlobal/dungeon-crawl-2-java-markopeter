@@ -50,6 +50,9 @@ public class MapLoader {
                             map.setActor(new Ghost(cell));
                             map.addEnemy(new Ghost(cell));
                             break;
+                        case 'b':
+                            cell.setType(CellType.BUTTON);
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
