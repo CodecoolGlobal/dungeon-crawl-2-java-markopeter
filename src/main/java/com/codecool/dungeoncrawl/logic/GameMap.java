@@ -65,9 +65,11 @@ public class GameMap {
 
     public void moveEnemy() {
         for (Actor enemy: enemies) {
-            if(enemy instanceof Skeleton){
-               int [] coord = ((Skeleton) enemy).movement();
-                enemy.checkForCollision(coord[0], coord[1]);
+            if(enemy.isAlive()){
+                if(enemy instanceof Skeleton){
+                    int [] coord = ((Skeleton) enemy).movement();
+                    enemy.checkForCollision(coord[0], coord[1]);
+                }
             }
         }
     }
