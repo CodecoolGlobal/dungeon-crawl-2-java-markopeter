@@ -112,39 +112,41 @@ public class Main extends Application {
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
+        if(map.getPlayer().isAlive()){
+            switch (keyEvent.getCode()) {
 
-        switch (keyEvent.getCode()) {
-           
-            case UP:
-                map.getPlayer().checkForCollision(0, -1);
-                if(map.getPlayer().isOnPortal()){
-                    map =MapLoader.loadMap(2);
-                }
-                refresh();
-                break;
-            case DOWN:
-                map.getPlayer().checkForCollision(0, 1);
-                if(map.getPlayer().isOnPortal()){
-                    map =MapLoader.loadMap(2);
-                }
-                refresh();
-                break;
-            case LEFT:
-                map.getPlayer().checkForCollision(-1, 0);
-                if(map.getPlayer().isOnPortal()){
-                    map =MapLoader.loadMap(2);
-                }
-                refresh();
-                break;
-            case RIGHT:
-                map.getPlayer().checkForCollision(1,0);
-                if(map.getPlayer().isOnPortal()){
-                    map =MapLoader.loadMap(2);
+                case UP:
+                    map.getPlayer().checkForCollision(0, -1);
+                    if(map.getPlayer().isOnPortal()){
+                        map =MapLoader.loadMap(2);
+                    }
                     refresh();
-                }
-                refresh();
-                break;
+                    break;
+                case DOWN:
+                    map.getPlayer().checkForCollision(0, 1);
+                    if(map.getPlayer().isOnPortal()){
+                        map =MapLoader.loadMap(2);
+                    }
+                    refresh();
+                    break;
+                case LEFT:
+                    map.getPlayer().checkForCollision(-1, 0);
+                    if(map.getPlayer().isOnPortal()){
+                        map =MapLoader.loadMap(2);
+                    }
+                    refresh();
+                    break;
+                case RIGHT:
+                    map.getPlayer().checkForCollision(1,0);
+                    if(map.getPlayer().isOnPortal()){
+                        map =MapLoader.loadMap(2);
+                        refresh();
+                    }
+                    refresh();
+                    break;
+            }
         }
+
     }
 
     private void addItemsToUI(){
@@ -183,5 +185,8 @@ public class Main extends Application {
             mapYStart++;
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
+        if(!map.getPlayer().isAlive()){
+            healthLabel.setText("Dead!");
+        }
     }
 }
