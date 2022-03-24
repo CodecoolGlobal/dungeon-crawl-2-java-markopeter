@@ -13,7 +13,8 @@ public class Player extends Actor {
 
     private Cell cell;
     private int health = 10;
-    private int damage = 5;
+    private int damage = 1;
+    private boolean onPortal = false;
 
     public Player(Cell cell) {
 
@@ -33,6 +34,9 @@ public class Player extends Actor {
         Items item = getCell().getItem();
         if(item != null){
             addToInventory(itemList, item);
+            if(item instanceof Swords){
+                ((Swords) item).increaseDamage(damage, ((Swords) item).getDamage());
+            }
         }
 
     }
@@ -45,7 +49,10 @@ public class Player extends Actor {
             if(hasThatKey(CellType.DOOR.getItemFunction())){
                 move(nextCell);
             }
-        }else if(!(nextCell.getType() == CellType.WALL)){
+        }else if(nextCell.getType() == CellType.PORTAL){
+            onPortal = true;
+        }
+        else if(!(nextCell.getType() == CellType.WALL)){
             if(nextCell.getActor() == null){
                 move(nextCell);
             }else{
@@ -53,6 +60,7 @@ public class Player extends Actor {
                 checkForCollision(-dx,-dy);
             }
         }
+
     }
 
     @Override
@@ -91,5 +99,14 @@ public class Player extends Actor {
     public HashMap<Items, Integer> getItemList(){
         return itemList;
     }
+
+    public boolean isOnPortal() {
+        return onPortal;
+    }
+
+    public void setOnPortal(boolean onPortal) {
+        this.onPortal = onPortal;
+    }
+
 
 }

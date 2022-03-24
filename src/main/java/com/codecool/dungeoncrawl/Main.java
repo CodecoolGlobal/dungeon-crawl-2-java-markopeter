@@ -116,18 +116,33 @@ public class Main extends Application {
            
             case UP:
                 map.getPlayer().checkForCollision(0, -1);
+                if(map.getPlayer().isOnPortal()){
+                    map =MapLoader.loadMap(2);public int getDamage() {
+        return damage;
+    }
+                }
                 refresh();
                 break;
             case DOWN:
                 map.getPlayer().checkForCollision(0, 1);
+                if(map.getPlayer().isOnPortal()){
+                    map =MapLoader.loadMap(2);
+                }
                 refresh();
                 break;
             case LEFT:
                 map.getPlayer().checkForCollision(-1, 0);
+                if(map.getPlayer().isOnPortal()){
+                    map =MapLoader.loadMap(2);
+                }
                 refresh();
                 break;
             case RIGHT:
                 map.getPlayer().checkForCollision(1,0);
+                if(map.getPlayer().isOnPortal()){
+                    map =MapLoader.loadMap(2);
+                    refresh();
+                }
                 refresh();
                 break;
         }
