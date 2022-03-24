@@ -30,7 +30,7 @@ import java.util.Set;
 import static com.codecool.dungeoncrawl.logic.CellType.FLOOR;
 
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap(1);
+    GameMap map = MapLoader.loadMap(2);
     Canvas canvas = new Canvas(
             40 * Tiles.TILE_WIDTH,
             40 * Tiles.TILE_WIDTH);

@@ -23,7 +23,7 @@ public class MapLoader {
                 if (x < line.length()) {
                     Cell cell = map.getCell(x, y);
                     switch (line.charAt(x)) {
-                        case 'k':
+                        case 'w':
                             cell.setType(CellType.FLOOR);
                             cell.setItem(new Swords(cell));
                             break;
@@ -35,6 +35,9 @@ public class MapLoader {
                             break;
                         case '.':
                             cell.setType(CellType.FLOOR);
+                            break;
+                        case 'd':
+                            cell.setType(CellType.DOOR);
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
@@ -52,6 +55,10 @@ public class MapLoader {
                             break;
                         case 'b':
                             cell.setType(CellType.BUTTON);
+                            break;
+                        case 'k':
+                            cell.setType(CellType.FLOOR);
+                            cell.setItem(new Key(cell));
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
