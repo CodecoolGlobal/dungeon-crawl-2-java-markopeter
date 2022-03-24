@@ -42,6 +42,7 @@ public class Main extends Application {
     Label slot2 = new Label();
     Label[] inventorySlots = {slot1,slot2};
 
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -112,6 +113,8 @@ public class Main extends Application {
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
+        Popup.display("Welcome on board !", "Greetings traveler ! Dont get be confused by your " +
+                "little sword, you stand no chance against this dungeon mighty creatures !");
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {

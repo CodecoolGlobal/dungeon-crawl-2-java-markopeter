@@ -4,7 +4,6 @@ import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Swords extends Items{
 
-    private final int DAMAGE = 10;
     public Swords(Cell cell){
         super("sword", cell);
     }
@@ -15,6 +14,7 @@ public class Swords extends Items{
 
     @Override
     public int getDamage() {
+        int DAMAGE = 10;
         return DAMAGE;
     }
 }
