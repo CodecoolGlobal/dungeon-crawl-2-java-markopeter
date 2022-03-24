@@ -5,7 +5,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 public class Minotaur extends Actor{
 
     private int health = 4;
-    private int damage = 2;
+    private int damage = 10;
     public Minotaur(Cell cell) {
         super(cell);
     }
@@ -60,11 +60,11 @@ public class Minotaur extends Actor{
             minotaurCoordinates[0]--;
             minotaurCoordinates[1]--;
         }
-        else if(x < minotaurX && y > minotaurY){
+        else if(x < minotaurX){
             minotaurCoordinates[0]--;
             minotaurCoordinates[1]++;
         }
-        else if(x > minotaurX && y < minotaurY){
+        else if(x > minotaurX){
             minotaurCoordinates[0]++;
             minotaurCoordinates[1]--;
         }
