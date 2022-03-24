@@ -13,7 +13,7 @@ public class Player extends Actor {
 
     private Cell cell;
     private int health = 10;
-    private int damage = 1;
+    private int damage = 3;
     private boolean onPortal = false;
 
     public Player(Cell cell) {
@@ -35,7 +35,7 @@ public class Player extends Actor {
         if(item != null){
             addToInventory(itemList, item);
             if(item instanceof Swords){
-                ((Swords) item).increaseDamage(damage, ((Swords) item).getDamage());
+                setDamage(damage+item.getDamage());
             }
         }
 
