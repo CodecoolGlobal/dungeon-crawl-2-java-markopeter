@@ -20,13 +20,16 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
+import static com.codecool.dungeoncrawl.logic.CellType.FLOOR;
+
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap();
+    GameMap map = MapLoader.loadMap(1);
     Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
+            40 * Tiles.TILE_WIDTH,
+            40 * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
     Label slot1 = new Label();
@@ -41,6 +44,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         GridPane ui = new GridPane();
         Button pickUpButton = new Button();
+        Button pushButton = new Button();
+        pushButton.setText("Push !");
+        pushButton.setFocusTraversable(false);
         pickUpButton.setText("Pick up item!");
         pickUpButton.setFocusTraversable(false);
         pickUpButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -53,8 +59,22 @@ public class Main extends Application {
                 addItemsToUI();
             }
         });
-        ui.setPrefWidth(200);
+        pushButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                int x = map.getPlayer().getX();
+                int y = map.getPlayer().getY();
+                if(Objects.equals(map.getCell(x , y).getTileName(), "button")
+                ){
+                    map.getCell(5, 5).setType(FLOOR);
+                    refresh();
+                }
+            }
+        });
+        ui.setPrefWidth(300);
+        ui.setPrefHeight(1000);
         ui.setPadding(new Insets(10));
+        ui.add(pushButton, 0,10);
         ui.add(pickUpButton, 0,3);
         ui.add(new Label("Health: "), 0, 0);
         ui.add(new Label("Inventory: "), 0, 4);
