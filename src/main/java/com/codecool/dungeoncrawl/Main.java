@@ -110,12 +110,12 @@ public class Main extends Application {
                 }
                 else if (Objects.equals(map.getCell(x , y + 1).getTileName(), "wall")
                 ) {
-                    map.getCell(x - 1, y).setType(FLOOR);
+                    map.getCell(x, y + 1).setType(FLOOR);
                     refresh();
                 }
                 else if (Objects.equals(map.getCell(x , y -1).getTileName(), "wall")
                 ) {
-                    map.getCell(x - 1, y).setType(FLOOR);
+                    map.getCell(x - 1, y + 1).setType(FLOOR);
                     refresh();
                 }
             }
