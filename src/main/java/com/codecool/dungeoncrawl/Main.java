@@ -4,6 +4,9 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Items;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +21,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -45,6 +49,13 @@ public class Main extends Application {
         GridPane ui = new GridPane();
         Button pickUpButton = new Button();
         Button pushButton = new Button();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),
+                (evt) -> {
+                map.moveEnemy();
+                refresh();
+                }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
         pushButton.setText("Push !");
         pushButton.setFocusTraversable(false);
         pickUpButton.setText("Pick up item!");
@@ -106,22 +117,18 @@ public class Main extends Application {
            
             case UP:
                 map.getPlayer().checkForCollision(0, -1);
-                map.moveEnemy();
                 refresh();
                 break;
             case DOWN:
                 map.getPlayer().checkForCollision(0, 1);
-                map.moveEnemy();
                 refresh();
                 break;
             case LEFT:
                 map.getPlayer().checkForCollision(-1, 0);
-                map.moveEnemy();
                 refresh();
                 break;
             case RIGHT:
                 map.getPlayer().checkForCollision(1,0);
-                map.moveEnemy();
                 refresh();
                 break;
         }
