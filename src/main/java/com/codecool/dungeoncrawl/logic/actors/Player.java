@@ -14,6 +14,7 @@ public class Player extends Actor {
     private Cell cell;
     private int health = 10;
     private int damage = 5;
+    private boolean onPortal = false;
 
     public Player(Cell cell) {
 
@@ -36,6 +37,14 @@ public class Player extends Actor {
         }
 
     }
+
+    public void steppedOnPortal(Player player){
+        Cell cellSteppedOn = player.getCell();
+        if(cellSteppedOn.getType() == CellType.PORTAL){
+            player.setOnPortal(true);
+        }
+    }
+
 
     @Override
     public void checkForCollision(int dx, int dy){
@@ -91,5 +100,14 @@ public class Player extends Actor {
     public HashMap<Items, Integer> getItemList(){
         return itemList;
     }
+
+    public boolean isOnPortal() {
+        return onPortal;
+    }
+
+    public void setOnPortal(boolean onPortal) {
+        this.onPortal = onPortal;
+    }
+
 
 }
