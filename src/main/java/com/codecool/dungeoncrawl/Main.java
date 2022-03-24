@@ -31,9 +31,10 @@ import static com.codecool.dungeoncrawl.logic.CellType.FLOOR;
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap(1);
+    int canvasSize = 31;
     Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
+            canvasSize * Tiles.TILE_WIDTH,
+            canvasSize * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
     Label slot1 = new Label();
@@ -117,9 +118,7 @@ public class Main extends Application {
             case UP:
                 map.getPlayer().checkForCollision(0, -1);
                 if(map.getPlayer().isOnPortal()){
-                    map =MapLoader.loadMap(2);public int getDamage() {
-        return damage;
-    }
+                    map =MapLoader.loadMap(2);
                 }
                 refresh();
                 break;
@@ -161,18 +160,27 @@ public class Main extends Application {
     private void refresh() {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
-                }else if(cell.getItem() != null){
-                    Tiles.drawTile(context, cell.getItem(), x, y);
+        int mapYStart = map.getPlayer().getY()-(canvasSize-1)/2;
+        for(int i = 0; i < canvasSize; i++){
+            int mapXStart = map.getPlayer().getX()-(canvasSize-1)/2;
+            for(int j = 0; j < canvasSize; j++){
+                if(!(mapXStart < 0 || mapXStart >= map.getWidth() || mapYStart < 0 || mapYStart >= map.getHeight())){
+                    Cell cell = map.getCell(mapXStart, mapYStart);
+                    if (cell.getActor() != null) {
+                        Tiles.drawTile(context, cell.getActor(), j, i);
+                    }else if(cell.getItem() != null){
+                        Tiles.drawTile(context, cell.getItem(), j, i);
+                    }
+                    else {
+                        Tiles.drawTile(context, cell, j, i);
+                    }
+                }else{
+                    Cell cell = map.getCell(0,13);
+                    Tiles.drawTile(context, cell, j, i);
                 }
-                else {
-                    Tiles.drawTile(context, cell, x, y);
-                }
+                mapXStart++;
             }
+            mapYStart++;
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
     }
