@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MapLoader {
-    public static GameMap loadMap() {
-        InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+    public static GameMap loadMap(int level) {
+        InputStream is = MapLoader.class.getResourceAsStream(String.format("/map%s.txt", level));
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
