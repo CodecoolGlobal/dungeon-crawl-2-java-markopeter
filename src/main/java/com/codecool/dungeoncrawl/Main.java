@@ -37,6 +37,7 @@ public class Main extends Application {
             canvasSize * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Label damageLabel = new Label();
     Label slot1 = new Label();
     Label slot2 = new Label();
     Label[] inventorySlots = {slot1,slot2};
@@ -85,12 +86,14 @@ public class Main extends Application {
         });
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
-        ui.add(pushButton, 0,10);
-        ui.add(pickUpButton, 0,3);
+        ui.add(pushButton, 1,6);
+        ui.add(pickUpButton, 0,6);
         ui.add(new Label("Health: "), 0, 0);
-        ui.add(new Label("Inventory: "), 0, 4);
+        ui.add(new Label("Damage: "), 0, 1);
+        ui.add(new Label("Inventory: "), 0, 3);
         ui.add(healthLabel, 1, 0);
-        int inventoryItemStartCoordinate = 5;
+        ui.add(damageLabel, 1, 1);
+        int inventoryItemStartCoordinate = 4;
         for(Label label: inventorySlots){
             ui.add(label, 0, inventoryItemStartCoordinate);
             label.setText("empty");
@@ -185,6 +188,7 @@ public class Main extends Application {
             mapYStart++;
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
+        damageLabel.setText("" + map.getPlayer().getDamage());
         if(!map.getPlayer().isAlive()){
             healthLabel.setText("Dead!");
         }
