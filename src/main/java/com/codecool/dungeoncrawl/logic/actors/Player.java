@@ -93,7 +93,12 @@ public class Player extends Actor {
     }
 
     public String getTileName() {
-        return "player";
+        if(isAlive()){
+            return "player";
+        }else{
+            return "deadplayer";
+        }
+
     }
 
     public HashMap<Items, Integer> getItemList(){
