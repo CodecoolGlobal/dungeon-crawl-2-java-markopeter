@@ -54,13 +54,13 @@ public class Main extends Application {
         Button pickUpButton = new Button();
         Button pushButton = new Button();
         Button breakButton = new Button();
-//        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),
-//                (evt) -> {
-//                map.moveEnemy();
-//                refresh();
-//                }));
-//        timeline.setCycleCount(Animation.INDEFINITE);
-//        timeline.play();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),
+                (evt) -> {
+                map.moveEnemy();
+                refresh();
+                }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
         breakButton.setText("Break !");
         breakButton.setFocusTraversable(false);
         pushButton.setText("Push !");
@@ -161,6 +161,9 @@ public class Main extends Application {
                 case UP:
                     map.getPlayer().checkForCollision(0, -1);
                     if(map.getPlayer().isOnPortal()){
+                        if(gameEnd()){
+                            System.exit(0);
+                        }
                         map =MapLoader.loadMap(2);
 
                     }
@@ -169,6 +172,9 @@ public class Main extends Application {
                 case DOWN:
                     map.getPlayer().checkForCollision(0, 1);
                     if(map.getPlayer().isOnPortal()){
+                        if(gameEnd()){
+                            System.exit(0);
+                        }
                         map =MapLoader.loadMap(2);
                     }
                     refresh();
@@ -176,6 +182,9 @@ public class Main extends Application {
                 case LEFT:
                     map.getPlayer().checkForCollision(-1, 0);
                     if(map.getPlayer().isOnPortal()){
+                        if(gameEnd()){
+                            System.exit(0);
+                        }
                         map =MapLoader.loadMap(2);
                     }
                     refresh();
@@ -183,6 +192,9 @@ public class Main extends Application {
                 case RIGHT:
                     map.getPlayer().checkForCollision(1,0);
                     if(map.getPlayer().isOnPortal()){
+                        if(gameEnd()){
+                            System.exit(0);
+                        }
                         map =MapLoader.loadMap(2);
                     }
                     refresh();
@@ -232,5 +244,14 @@ public class Main extends Application {
         if(!map.getPlayer().isAlive()){
             healthLabel.setText("Dead!");
         }
+    }
+
+    public boolean gameEnd(){
+        HashMap<Items, Integer> itemList = map.getPlayer().getItemList();
+        boolean hasClass = itemList.keySet().stream().anyMatch(Swords.class::isInstance);
+        if (hasClass) {
+            return true;
+        }
+        return false;
     }
 }
