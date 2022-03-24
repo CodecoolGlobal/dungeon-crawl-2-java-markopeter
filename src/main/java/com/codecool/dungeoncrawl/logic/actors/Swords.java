@@ -3,7 +3,7 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Swords extends Items{
-
+    private String swordName = "demobreaker";
     public Swords(Cell cell){
         super("sword", cell);
     }
@@ -17,4 +17,10 @@ public class Swords extends Items{
         int DAMAGE = 10;
         return DAMAGE;
     }
+
+    public String getSwordName() {
+        return swordName;
+    }
+
+
 }
