@@ -32,9 +32,7 @@ public class Player extends Actor {
     public void pickUpItem(){
         Items item = getCell().getItem();
         if(item != null){
-            if(item instanceof Swords){
-                addToInventory(itemList, item);
-            }
+            addToInventory(itemList, item);
         }
 
     }
@@ -42,13 +40,14 @@ public class Player extends Actor {
     @Override
     public void checkForCollision(int dx, int dy){
         Cell nextCell = super.getCell().getNeighbor(dx, dy);
-        if(!(nextCell.getType() == CellType.WALL)){
+
+        if(nextCell.getType() == CellType.DOOR){
+            if(hasThatKey(CellType.DOOR.getItemFunction())){
+                move(nextCell);
+            }
+        }else if(!(nextCell.getType() == CellType.WALL)){
             if(nextCell.getActor() == null){
                 move(nextCell);
-            }else if(nextCell.getType() == CellType.DOOR){
-                if(hasThatKey(CellType.DOOR.getItemFunction())){
-                    move(nextCell);
-                }
             }else{
                 fight(super.getCell().getActor(), nextCell.getActor());
                 checkForCollision(-dx,-dy);
