@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Items implements Drawable {
     private String name;
+    private int damage;
     private int x;
     private int y;
 
@@ -37,4 +38,6 @@ public abstract class Items implements Drawable {
     public void setY(int y) {
         this.y = y;
     }
+
+    public abstract int getDamage();
 }
