@@ -73,6 +73,12 @@ public class GameMap {
                     int [] coord = ((Ghost) enemy).ghostMove();
                     enemy.checkForCollision(coord[0], coord[1]);
                 }
+                if(enemy instanceof Minotaur){
+                    int [] coord = ((Minotaur) enemy).minotaurMove(player.getX(), player.getY());
+                    enemy.checkForCollision(coord[0], coord[1]);
+                }
+
+
             }
         }
     }

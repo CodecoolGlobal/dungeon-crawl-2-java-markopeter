@@ -63,6 +63,11 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             cell.setItem(new Key(cell));
                             break;
+                        case 'm':
+                            cell.setType(CellType.FLOOR);
+                            map.setActor(new Minotaur(cell));
+                            map.addEnemy(new Minotaur(cell));
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }

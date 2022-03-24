@@ -30,7 +30,7 @@ import java.util.Set;
 import static com.codecool.dungeoncrawl.logic.CellType.FLOOR;
 
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap(1);
+    GameMap map = MapLoader.loadMap(2);
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
@@ -116,18 +116,31 @@ public class Main extends Application {
            
             case UP:
                 map.getPlayer().checkForCollision(0, -1);
+                if(map.getPlayer().isOnPortal()){
+                    map =MapLoader.loadMap(2);
+                }
                 refresh();
                 break;
             case DOWN:
                 map.getPlayer().checkForCollision(0, 1);
+                if(map.getPlayer().isOnPortal()){
+                    map =MapLoader.loadMap(2);
+                }
                 refresh();
                 break;
             case LEFT:
                 map.getPlayer().checkForCollision(-1, 0);
+                if(map.getPlayer().isOnPortal()){
+                    map =MapLoader.loadMap(2);
+                }
                 refresh();
                 break;
             case RIGHT:
                 map.getPlayer().checkForCollision(1,0);
+                if(map.getPlayer().isOnPortal()){
+                    map =MapLoader.loadMap(2);
+                    refresh();
+                }
                 refresh();
                 break;
         }

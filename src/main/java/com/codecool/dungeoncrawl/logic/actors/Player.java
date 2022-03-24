@@ -34,17 +34,12 @@ public class Player extends Actor {
         Items item = getCell().getItem();
         if(item != null){
             addToInventory(itemList, item);
+            if(item instanceof Swords){
+                ((Swords) item).increaseDamage(damage, ((Swords) item).getDamage());
+            }
         }
 
     }
-
-    public void steppedOnPortal(Player player){
-        Cell cellSteppedOn = player.getCell();
-        if(cellSteppedOn.getType() == CellType.PORTAL){
-            player.setOnPortal(true);
-        }
-    }
-
 
     @Override
     public void checkForCollision(int dx, int dy){
@@ -54,7 +49,10 @@ public class Player extends Actor {
             if(hasThatKey(CellType.DOOR.getItemFunction())){
                 move(nextCell);
             }
-        }else if(!(nextCell.getType() == CellType.WALL)){
+        }else if(nextCell.getType() == CellType.PORTAL){
+            onPortal = true;
+        }
+        else if(!(nextCell.getType() == CellType.WALL)){
             if(nextCell.getActor() == null){
                 move(nextCell);
             }else{
@@ -62,6 +60,7 @@ public class Player extends Actor {
                 checkForCollision(-dx,-dy);
             }
         }
+
     }
 
     @Override
