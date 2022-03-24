@@ -36,6 +36,9 @@ public class MapLoader {
                         case '.':
                             cell.setType(CellType.FLOOR);
                             break;
+                        case 'd':
+                            cell.setType(CellType.DOOR);
+                            break;
                         case 's':
                             cell.setType(CellType.FLOOR);
                             map.setActor(new Skeleton(cell));
