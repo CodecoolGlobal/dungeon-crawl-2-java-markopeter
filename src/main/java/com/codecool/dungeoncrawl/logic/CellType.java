@@ -1,21 +1,20 @@
 package com.codecool.dungeoncrawl.logic;
 
 public enum CellType {
-    EMPTY("empty", null,false),
-    FLOOR("floor",null,false),
-    WALL("wall",null,false),
-    DOOR("door","key", false),
-    BUTTON("button", null, false);
+    EMPTY("empty", null),
+    FLOOR("floor",null),
+    WALL("wall",null),
+    DOOR("door","key"),
+    BUTTON("button", null),
+    PORTAL("portal", null);
 
 
     private final String tileName;
     private final String itemFunction;
-    private boolean steppedOn;
 
-    CellType(String tileName, String itemFunction, boolean steppedOn) {
+    CellType(String tileName, String itemFunction) {
         this.tileName = tileName;
         this.itemFunction = itemFunction;
-        this.steppedOn = steppedOn;
 
     }
 
@@ -27,7 +26,5 @@ public enum CellType {
         return tileName;
     }
 
-    public void setSteppedOn(boolean steppedOn) {
-        this.steppedOn = steppedOn;
-    }
+
 }
