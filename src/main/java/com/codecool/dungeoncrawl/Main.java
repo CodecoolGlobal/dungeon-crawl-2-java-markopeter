@@ -17,6 +17,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -54,6 +55,11 @@ public class Main extends Application {
         Button pickUpButton = new Button();
         Button pushButton = new Button();
         Button breakButton = new Button();
+        Button inputButton = new Button();
+        Label nameLabel = new Label("Username");
+        TextField inputField = new TextField("Name");
+        ui.add(nameLabel,0,12);
+        ui.add(inputField,0,14);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),
                 (evt) -> {
                 map.moveEnemy();
@@ -61,12 +67,26 @@ public class Main extends Application {
                 }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+        inputButton.setText("Add!");
+        inputButton.setFocusTraversable(false);
         breakButton.setText("Break !");
         breakButton.setFocusTraversable(false);
         pushButton.setText("Push !");
         pushButton.setFocusTraversable(false);
         pickUpButton.setText("Pick up item!");
         pickUpButton.setFocusTraversable(false);
+        inputField.setFocusTraversable(false);
+
+        inputButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                ui.add(new Label("name: " + inputField.getText()), 0, 0);
+                map.getPlayer().setName(inputField.getText());
+                inputField.setDisable(true);
+            }
+        });
+
+
         pickUpButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -121,16 +141,17 @@ public class Main extends Application {
             }
         }
         });
-        ui.setPrefWidth(200);
+        ui.setPrefWidth(300);
         ui.setPadding(new Insets(10));
-        ui.add(pushButton, 1,6);
+        ui.add(pushButton, 0,10);
         ui.add(pickUpButton, 0,6);
         ui.add(breakButton, 0,8);
-        ui.add(new Label("Health: "), 0, 0);
-        ui.add(new Label("Damage: "), 0, 1);
+        ui.add(inputButton, 0, 16);
+        ui.add(new Label("Health: "), 0, 1);
+        ui.add(new Label("Damage: "), 0, 2);
         ui.add(new Label("Inventory: "), 0, 3);
-        ui.add(healthLabel, 1, 0);
-        ui.add(damageLabel, 1, 1);
+        ui.add(healthLabel, 1, 1);
+        ui.add(damageLabel, 1, 2);
         int inventoryItemStartCoordinate = 4;
         for(Label label: inventorySlots){
             ui.add(label, 0, inventoryItemStartCoordinate);

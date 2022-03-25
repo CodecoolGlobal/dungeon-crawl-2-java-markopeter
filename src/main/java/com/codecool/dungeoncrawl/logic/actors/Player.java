@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class Player extends Actor {
@@ -15,6 +16,12 @@ public class Player extends Actor {
     private int health = 10;
     private int damage = 3;
     private boolean onPortal = false;
+
+    public String getName() {
+        return name;
+    }
+
+    private String name = "Unknown";
 
     public Player(Cell cell) {
 
@@ -112,6 +119,8 @@ public class Player extends Actor {
     public void setOnPortal(boolean onPortal) {
         this.onPortal = onPortal;
     }
-
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }
