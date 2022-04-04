@@ -23,11 +23,19 @@ public class Tiles {
     }
 
     static {
+        tileMap.put("swords", new Tile(0, 31));
         tileMap.put("empty", new Tile(0, 0));
         tileMap.put("wall", new Tile(10, 17));
         tileMap.put("floor", new Tile(2, 0));
         tileMap.put("player", new Tile(27, 0));
         tileMap.put("skeleton", new Tile(29, 6));
+        tileMap.put("ghost", new Tile(26, 6));
+        tileMap.put("button", new Tile(22, 3));
+        tileMap.put("key", new Tile(16, 23));
+        tileMap.put("door", new Tile(3, 9));
+        tileMap.put("portal", new Tile(27, 24));
+        tileMap.put("minotaur", new Tile(31, 2));
+        tileMap.put("deadplayer", new Tile(1,14));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {
