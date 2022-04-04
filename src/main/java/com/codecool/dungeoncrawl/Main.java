@@ -1,9 +1,11 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Items;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Swords;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -18,6 +20,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -25,6 +30,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
@@ -38,6 +44,7 @@ public class Main extends Application {
             canvasSize * Tiles.TILE_WIDTH,
             canvasSize * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
+    GameDatabaseManager dbManager;
     Label healthLabel = new Label();
     Label damageLabel = new Label();
     Label slot1 = new Label();
@@ -51,6 +58,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        setupDbManager();
         GridPane ui = new GridPane();
         Button pickUpButton = new Button();
         Button pushButton = new Button();
@@ -168,11 +176,21 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
-
+        scene.setOnKeyReleased(this::onKeyReleased);
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
         Popup.display("Welcome on board !", "Greetings traveler ! Dont get be confused by your " +
                 "little sword, you stand no chance against this dungeon mighty creatures !");
+    }
+
+    private void onKeyReleased(KeyEvent keyEvent) {
+        KeyCombination exitCombinationMac = new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN);
+        KeyCombination exitCombinationWin = new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN);
+        if (exitCombinationMac.match(keyEvent)
+                || exitCombinationWin.match(keyEvent)
+                || keyEvent.getCode() == KeyCode.ESCAPE) {
+            exit();
+        }
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
@@ -183,7 +201,7 @@ public class Main extends Application {
                     map.getPlayer().checkForCollision(0, -1);
                     if(map.getPlayer().isOnPortal()){
                         if(gameEnd()){
-                            System.exit(0);
+                            exit();
                         }
                         map =MapLoader.loadMap(2);
 
@@ -194,7 +212,7 @@ public class Main extends Application {
                     map.getPlayer().checkForCollision(0, 1);
                     if(map.getPlayer().isOnPortal()){
                         if(gameEnd()){
-                            System.exit(0);
+                            exit();
                         }
                         map =MapLoader.loadMap(2);
                     }
@@ -204,7 +222,7 @@ public class Main extends Application {
                     map.getPlayer().checkForCollision(-1, 0);
                     if(map.getPlayer().isOnPortal()){
                         if(gameEnd()){
-                            System.exit(0);
+                            exit();
                         }
                         map =MapLoader.loadMap(2);
                     }
@@ -214,11 +232,15 @@ public class Main extends Application {
                     map.getPlayer().checkForCollision(1,0);
                     if(map.getPlayer().isOnPortal()){
                         if(gameEnd()){
-                            System.exit(0);
+                            exit();
                         }
                         map =MapLoader.loadMap(2);
                     }
                     refresh();
+                    break;
+                case S:
+                    Player player = map.getPlayer();
+                    dbManager.savePlayer(player);
                     break;
             }
         }
@@ -274,5 +296,23 @@ public class Main extends Application {
             return true;
         }
         return false;
+    }
+
+    private void setupDbManager() {
+        dbManager = new GameDatabaseManager();
+        try {
+            dbManager.setup();
+        } catch (SQLException ex) {
+            System.out.println("Cannot connect to database.");
+        }
+    }
+
+    private void exit() {
+        try {
+            stop();
+        } catch (Exception e) {
+            System.exit(1);
+        }
+        System.exit(0);
     }
 }
