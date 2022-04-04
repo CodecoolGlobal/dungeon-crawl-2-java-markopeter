@@ -1,4 +1,6 @@
 package com.codecool.dungeoncrawl;
+import com.codecool.dungeoncrawl.dao.GameStateDaoJdbc;
+import com.codecool.dungeoncrawl.model.GameState;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -26,5 +28,28 @@ public class Popup {
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
+    }
+
+    public static void saveDisplay(String title, String message, GameStateDaoJdbc state,GameState save){
+        Stage saveWindow = new Stage();
+        saveWindow.initModality(Modality.APPLICATION_MODAL);
+        saveWindow.setTitle(title);
+        saveWindow.setMinWidth(300);
+
+        Label label = new Label();
+        label.setText(message);
+
+        Button closeButton = new Button("Got it ! ");
+        closeButton.setOnAction(e -> saveWindow.close());
+        Button saveButton = new Button("Save");
+        saveButton.setOnAction(e -> state.add(save));
+
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(label, closeButton);
+        layout.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(layout);
+        saveWindow.setScene(scene);
+        saveWindow.showAndWait();
+
     }
 }

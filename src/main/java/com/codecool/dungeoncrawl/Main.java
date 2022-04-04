@@ -65,6 +65,7 @@ public class Main extends Application {
         Button pushButton = new Button();
         Button breakButton = new Button();
         Button inputButton = new Button();
+        Button saveButton = new Button();
         Label nameLabel = new Label("Username");
         TextField inputField = new TextField("Name");
         ProgressBar healthBar = new ProgressBar();
@@ -80,6 +81,8 @@ public class Main extends Application {
                 }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+        saveButton.setText("Save");
+        saveButton.setFocusTraversable(false);
         inputButton.setText("Add!");
         inputButton.setFocusTraversable(false);
         breakButton.setText("Break !");
@@ -160,6 +163,7 @@ public class Main extends Application {
         ui.add(pickUpButton, 0,6);
         ui.add(breakButton, 0,8);
         ui.add(inputButton, 0, 16);
+        ui.add(saveButton,0,20);
         ui.add(new Label("Health: "), 0, 1);
         ui.add(new Label("Damage: "), 0, 2);
         ui.add(new Label("Inventory: "), 0, 3);
