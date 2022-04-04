@@ -19,6 +19,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -66,8 +67,12 @@ public class Main extends Application {
         Button inputButton = new Button();
         Label nameLabel = new Label("Username");
         TextField inputField = new TextField("Name");
+        ProgressBar healthBar = new ProgressBar();
+        healthBar.setProgress(1);
+
         ui.add(nameLabel,0,12);
         ui.add(inputField,0,14);
+        ui.add(healthBar,0,18);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),
                 (evt) -> {
                 map.moveEnemy();
