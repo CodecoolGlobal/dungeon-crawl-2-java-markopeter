@@ -7,6 +7,8 @@ import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Items;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Swords;
+import com.codecool.dungeoncrawl.model.GameState;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -19,6 +21,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -30,6 +33,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Objects;
@@ -38,7 +44,7 @@ import java.util.Set;
 import static com.codecool.dungeoncrawl.logic.CellType.FLOOR;
 
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap(1);
+    GameMap map = MapLoader.loadMap("1");
     int canvasSize = 31;
     Canvas canvas = new Canvas(
             canvasSize * Tiles.TILE_WIDTH,
@@ -64,10 +70,15 @@ public class Main extends Application {
         Button pushButton = new Button();
         Button breakButton = new Button();
         Button inputButton = new Button();
+        Button saveButton = new Button();
         Label nameLabel = new Label("Username");
         TextField inputField = new TextField("Name");
+        ProgressBar healthBar = new ProgressBar();
+        healthBar.setProgress(1);
+
         ui.add(nameLabel,0,12);
         ui.add(inputField,0,14);
+        ui.add(healthBar,0,18);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),
                 (evt) -> {
                 map.moveEnemy();
@@ -75,6 +86,8 @@ public class Main extends Application {
                 }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+        saveButton.setText("Save");
+        saveButton.setFocusTraversable(false);
         inputButton.setText("Add!");
         inputButton.setFocusTraversable(false);
         breakButton.setText("Break !");
@@ -84,6 +97,32 @@ public class Main extends Application {
         pickUpButton.setText("Pick up item!");
         pickUpButton.setFocusTraversable(false);
         inputField.setFocusTraversable(false);
+
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                PlayerModel player = new PlayerModel(map.getPlayer());
+                if(actionEvent.getSource()==saveButton){
+                    GameDatabaseManager saveGame = new GameDatabaseManager();
+
+                    try {
+                        saveGame.setup();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    System.out.println("test save");
+                    String stringState = map.convertGameMapToString();
+                    try {
+                        map.createTxtForMap(stringState, player.getPlayerName());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    saveGame.saveGameState(stringState,player);
+
+                }
+            }
+        });
+
 
         inputButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -155,6 +194,7 @@ public class Main extends Application {
         ui.add(pickUpButton, 0,6);
         ui.add(breakButton, 0,8);
         ui.add(inputButton, 0, 16);
+        ui.add(saveButton,0,20);
         ui.add(new Label("Health: "), 0, 1);
         ui.add(new Label("Damage: "), 0, 2);
         ui.add(new Label("Inventory: "), 0, 3);
@@ -203,7 +243,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap(2);
+                        map =MapLoader.loadMap("2");
 
                     }
                     refresh();
@@ -214,7 +254,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap(2);
+                        map =MapLoader.loadMap("2");
                     }
                     refresh();
                     break;
@@ -224,7 +264,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap(2);
+                        map =MapLoader.loadMap("2");
                     }
                     refresh();
                     break;
@@ -234,7 +274,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap(2);
+                        map =MapLoader.loadMap("2");
                     }
                     refresh();
                     break;
