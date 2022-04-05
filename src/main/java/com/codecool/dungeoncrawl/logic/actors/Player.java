@@ -4,15 +4,12 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 public class Player extends Actor {
 
     private HashMap<Items, Integer> itemList = new HashMap<>();
 
-    private Cell cell;
     private int health = 10;
     private int damage = 3;
     private boolean onPortal = false;
@@ -28,7 +25,7 @@ public class Player extends Actor {
         super(cell);
     }
 
-    public void addToInventory(Map<Items, Integer> itemList, Items item){
+    public void addToInventory(Items item){
 
             if(itemList.containsKey(item)){
                 itemList.replace(item,itemList.get(item) + 1);
@@ -40,7 +37,7 @@ public class Player extends Actor {
     public void pickUpItem(){
         Items item = getCell().getItem();
         if(item != null){
-            addToInventory(itemList, item);
+            addToInventory(item);
             if(item instanceof Swords){
                 setDamage(damage+item.getDamage());
             }
@@ -110,6 +107,10 @@ public class Player extends Actor {
 
     public HashMap<Items, Integer> getItemList(){
         return itemList;
+    }
+
+    public void setItemList(HashMap<Items, Integer> itemList){
+        this.itemList = itemList;
     }
 
     public boolean isOnPortal() {
