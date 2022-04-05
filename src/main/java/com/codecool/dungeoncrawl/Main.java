@@ -7,6 +7,7 @@ import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Items;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Swords;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -31,6 +32,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Objects;
@@ -92,6 +94,27 @@ public class Main extends Application {
         pickUpButton.setText("Pick up item!");
         pickUpButton.setFocusTraversable(false);
         inputField.setFocusTraversable(false);
+
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                PlayerModel player = new PlayerModel(map.getPlayer());
+                if(actionEvent.getSource()==saveButton){
+                    GameDatabaseManager saveGame = new GameDatabaseManager();
+
+                    try {
+                        saveGame.setup();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    System.out.println("test save");
+                    saveGame.saveGameState("TestMap",player);
+//
+
+                }
+            }
+        });
+
 
         inputButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override

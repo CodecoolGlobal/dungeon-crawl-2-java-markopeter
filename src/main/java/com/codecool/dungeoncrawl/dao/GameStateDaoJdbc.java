@@ -19,11 +19,11 @@ public class GameStateDaoJdbc implements GameStateDao {
     @Override
     public void add(GameState state) {
         try(Connection conn = dataSource.getConnection()){
-            String sql = "INSERT INTO game_state (save_text, current_map, savedAt) VALUES(?, ?, ?)";
+            String sql = "INSERT INTO game_state (save_text, current_map, saved_at) VALUES(?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, state.getPlayer().getPlayerName());
             st.setString(2, state.getCurrentMap());
-            st.setDate(3,state.getSavedAt());
+            st.setTimestamp(3,state.getSavedAt());
             st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
             rs.next();
