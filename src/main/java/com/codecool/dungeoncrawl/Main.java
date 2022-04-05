@@ -7,6 +7,7 @@ import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Items;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Swords;
+import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -108,7 +109,8 @@ public class Main extends Application {
                         throwables.printStackTrace();
                     }
                     System.out.println("test save");
-                    saveGame.saveGameState("TestMap",player);
+                    String stringState = map.convertGameMapToString();
+                    saveGame.saveGameState(stringState,player);
 //
 
                 }

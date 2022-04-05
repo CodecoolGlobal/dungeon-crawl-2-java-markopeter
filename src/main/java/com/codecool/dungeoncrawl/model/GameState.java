@@ -1,11 +1,17 @@
 package com.codecool.dungeoncrawl.model;
 
+import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
+
+import static com.codecool.dungeoncrawl.logic.CellType.*;
 
 public class GameState extends BaseModel {
     private Timestamp savedAt;
@@ -59,5 +65,8 @@ public class GameState extends BaseModel {
     public void setSaveText(String saveText) {
         this.saveText = saveText;
     }
+
+
+
 
 }
