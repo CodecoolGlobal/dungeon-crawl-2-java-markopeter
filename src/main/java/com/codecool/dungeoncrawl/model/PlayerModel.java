@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.model;
 
+import com.codecool.dungeoncrawl.logic.actors.Items;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 
 public class PlayerModel extends BaseModel {
@@ -7,11 +8,39 @@ public class PlayerModel extends BaseModel {
     private int hp;
     private int x;
     private int y;
+    private int dmg;
+    private String inventorySlot1;
+    private String inventorySlot2;
+    private int inventorySlot1Amount;
+    private int inventorySlot2Amount;
 
-    public PlayerModel(String playerName, int x, int y) {
+    public String getInventorySlot1() {
+        return inventorySlot1;
+    }
+
+    public String getInventorySlot2() {
+        return inventorySlot2;
+    }
+
+    public int getInventorySlot1Amount() {
+        return inventorySlot1Amount;
+    }
+
+    public int getInventorySlot2Amount() {
+        return inventorySlot2Amount;
+    }
+
+    public PlayerModel(String playerName, int x, int y, int dmg,
+                       String inventorySlot1, String inventorySlot2,
+                       int inventorySlot1Amount, int inventorySlot2Amount) {
         this.playerName = playerName;
         this.x = x;
         this.y = y;
+        this.dmg = dmg;
+        this.inventorySlot1 = inventorySlot1;
+        this.inventorySlot1Amount = inventorySlot1Amount;
+        this.inventorySlot2 = inventorySlot2;
+        this.inventorySlot2Amount = inventorySlot2Amount;
     }
 
     public PlayerModel(Player player) {
@@ -20,6 +49,14 @@ public class PlayerModel extends BaseModel {
         this.y = player.getY();
 
         this.hp = player.getHealth();
+        this.dmg = player.getDamage();
+
+        Items firstItem = (Items)player.getItemList().keySet().toArray()[0];
+        this.inventorySlot1 = firstItem.getName();
+        this.inventorySlot1Amount = player.getItemList().get(firstItem);
+        Items secondItem = (Items)player.getItemList().keySet().toArray()[1];
+        this.inventorySlot2 = secondItem.getName();
+        this.inventorySlot2Amount = player.getItemList().get(secondItem);
 
     }
 
@@ -30,6 +67,10 @@ public class PlayerModel extends BaseModel {
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
+
+    public int getDmg(){return dmg;}
+
+    public void setDmg(int dmg){ this.dmg = dmg;}
 
     public int getHp() {
         return hp;
