@@ -83,6 +83,22 @@ public class PlayerDaoJdbc implements PlayerDao {
     }
 
     @Override
+    public int getPlayerHealthFromSql(int id){
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT hp FROM player WHERE id = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) {
+                return 0;
+            }
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<PlayerModel> getAll() {
         return null;
     }

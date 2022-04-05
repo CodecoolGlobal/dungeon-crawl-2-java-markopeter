@@ -11,5 +11,6 @@ public interface PlayerDao {
     void update(PlayerModel player);
     PlayerModel get(int id);
     HashMap<Items, Integer> getInventoryFromSql(int id);
+    int getPlayerHealthFromSql(int id);
     List<PlayerModel> getAll();
 }
