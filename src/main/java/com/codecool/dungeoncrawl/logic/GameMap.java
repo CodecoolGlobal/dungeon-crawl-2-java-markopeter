@@ -2,6 +2,10 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.*;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -93,37 +97,60 @@ public class GameMap {
 
     public String convertGameMapToString() {
         StringBuilder sb = new StringBuilder();
-        for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
             sb.append("\n");
-            for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
 
-                if (cells[x][y].getType() == FLOOR && Objects.equals(cells[x][y].getTileName(), "sword")) {
-                    sb.append("w");
-                } else if (cells[x][y].getType() == FLOOR && Objects.equals(cells[x][y].getTileName(), "key")) {
-                    sb.append("k");
-                } else if (cells[x][y].getType() == FLOOR) {
-                    sb.append(".");
-                } else if (cells[x][y].getType() == FLOOR && Objects.equals(cells[x][y].getActor().getTileName(), "ghost")) {
-                    sb.append("g");
-                } else if (cells[x][y].getType() == FLOOR && Objects.equals(cells[x][y].getActor().getTileName(), "skeleton")) {
-                    sb.append("s");
-                } else if (cells[x][y].getType() == FLOOR && Objects.equals(cells[x][y].getActor().getTileName(), "minotaur")) {
-                    sb.append("m");
-                } else if (cells[x][y].getType() == BUTTON) {
-                    sb.append("b");
-                } else if (cells[x][y].getType() == FLOOR && Objects.equals(cells[x][y].getTileName(), "player")) {
-                    sb.append("@");
-                } else if (cells[x][y].getType() == PORTAL) {
+                if (cells[x][y].getType() == FLOOR) {
+                    if (cells[x][y].getItem() != null) {
+                        if (Objects.equals(cells[x][y].getItem().getTileName(), "swords")) {
+                            sb.append("w");
+                        } else if (Objects.equals(cells[x][y].getItem().getTileName(), "key")) {
+                            sb.append("k");
+                        }
+                    } else if (cells[x][y].getActor() != null) {
+                        if (Objects.equals(cells[x][y].getActor().getTileName(), "skeleton")) {
+                            sb.append("s");
+                        } else if (Objects.equals(cells[x][y].getActor().getTileName(), "minotaur")) {
+                            sb.append("m");
+                        } else if (Objects.equals(cells[x][y].getActor().getTileName(), "ghost")) {
+                            sb.append("g");
+                        } else if (Objects.equals(cells[x][y].getActor().getTileName(), "player")) {
+                            sb.append("@");
+                        }
+                    }
+                    else  {
+                        sb.append(".");
+                    }
+                }
+                else if (cells[x][y].getType() == PORTAL) {
                     sb.append("p");
                 } else if (cells[x][y].getType() == DOOR) {
                     sb.append("d");
                 } else if (cells[x][y].getType() == EMPTY) {
                     sb.append(" ");
+                } else if (cells[x][y].getType() == WALL) {
+                    sb.append("#");
+                } else if (cells[x][y].getType() == BUTTON) {
+                    sb.append("b");
                 }
             }
         }
         String table = sb.toString();
         return table;
+
+    }
+
+    public void createTxtForMap(String map,String saveName) throws IOException {
+
+        String pathname = String.format("/home/marko/project/dungeon-crawl-2-java-markopeter/src/main/resources/%s.txt", saveName);
+        File mapFile = new File(pathname);
+
+        FileOutputStream outputStream = new FileOutputStream(pathname);
+        byte[] strToBytes = map.getBytes();
+        outputStream.write(strToBytes);
+
+        outputStream.close();
 
     }
 }

@@ -33,6 +33,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -42,7 +44,7 @@ import java.util.Set;
 import static com.codecool.dungeoncrawl.logic.CellType.FLOOR;
 
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap(1);
+    GameMap map = MapLoader.loadMap("1");
     int canvasSize = 31;
     Canvas canvas = new Canvas(
             canvasSize * Tiles.TILE_WIDTH,
@@ -110,8 +112,12 @@ public class Main extends Application {
                     }
                     System.out.println("test save");
                     String stringState = map.convertGameMapToString();
+                    try {
+                        map.createTxtForMap(stringState, player.getPlayerName());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     saveGame.saveGameState(stringState,player);
-//
 
                 }
             }
@@ -237,7 +243,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap(2);
+                        map =MapLoader.loadMap("2");
 
                     }
                     refresh();
@@ -248,7 +254,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap(2);
+                        map =MapLoader.loadMap("2");
                     }
                     refresh();
                     break;
@@ -258,7 +264,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap(2);
+                        map =MapLoader.loadMap("2");
                     }
                     refresh();
                     break;
@@ -268,7 +274,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap(2);
+                        map =MapLoader.loadMap("2");
                     }
                     refresh();
                     break;
