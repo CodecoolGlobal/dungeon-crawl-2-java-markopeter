@@ -70,15 +70,12 @@ public class Main extends Application {
         Button pushButton = new Button();
         Button breakButton = new Button();
         Button inputButton = new Button();
-        Button saveButton = new Button();
         Button loadButton = new Button();
         Label nameLabel = new Label("Username");
-        TextField inputField = new TextField("Name");
         ProgressBar healthBar = new ProgressBar();
         healthBar.setProgress(1);
 
         ui.add(nameLabel,0,12);
-        ui.add(inputField,0,14);
         ui.add(healthBar,0,18);
         ui.add(loadButton,0,22);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),
@@ -90,9 +87,7 @@ public class Main extends Application {
         timeline.play();
         loadButton.setText("Load");
         loadButton.setFocusTraversable(false);
-        saveButton.setText("Save");
-        saveButton.setFocusTraversable(false);
-        inputButton.setText("Add!");
+        inputButton.setText("Click to save!");
         inputButton.setFocusTraversable(false);
         breakButton.setText("Break !");
         breakButton.setFocusTraversable(false);
@@ -100,7 +95,6 @@ public class Main extends Application {
         pushButton.setFocusTraversable(false);
         pickUpButton.setText("Pick up item!");
         pickUpButton.setFocusTraversable(false);
-        inputField.setFocusTraversable(false);
 
         loadButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -187,7 +181,6 @@ public class Main extends Application {
         ui.add(pickUpButton, 0,6);
         ui.add(breakButton, 0,8);
         ui.add(inputButton, 0, 16);
-        ui.add(saveButton,0,20);
         ui.add(new Label("Health: "), 0, 1);
         ui.add(new Label("Damage: "), 0, 2);
         ui.add(new Label("Inventory: "), 0, 3);

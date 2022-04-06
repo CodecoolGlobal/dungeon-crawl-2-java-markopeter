@@ -51,18 +51,20 @@ public class PlayerModel extends BaseModel {
         this.hp = player.getHealth();
         this.dmg = player.getDamage();
         Object[] items = player.getItemList().keySet().toArray();
-        switch (player.getItemList().size()){
+        switch (items.length){
             case(0):
                 this.inventorySlot1 = "None";
                 this.inventorySlot1Amount = 0;
                 this.inventorySlot2 = "None";
                 this.inventorySlot2Amount = 0;
+                break;
             case(1):
                 Items firstItem = (Items)items[0];
                 this.inventorySlot1 = firstItem.getName();
                 this.inventorySlot1Amount = player.getItemList().get(firstItem);
                 this.inventorySlot2 = "None";
                 this.inventorySlot2Amount = 0;
+                break;
             case (2):
                 firstItem = (Items)player.getItemList().keySet().toArray()[0];
                 this.inventorySlot1 = firstItem.getName();
@@ -70,6 +72,7 @@ public class PlayerModel extends BaseModel {
                 Items secondItem = (Items)items[1];
                 this.inventorySlot2 = secondItem.getName();
                 this.inventorySlot2Amount = player.getItemList().get(secondItem);
+                break;
 
         }
 

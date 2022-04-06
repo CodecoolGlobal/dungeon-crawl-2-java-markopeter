@@ -26,8 +26,8 @@ public class GameDatabaseManager {
     }
 
 
-    public void saveGameState(String currentMap, PlayerModel player,int width, int height){
-        GameState gameState = new GameState(currentMap, new Timestamp(System.currentTimeMillis()), player);
+    public void saveGameState(String currentMap, String saveText,int width, int height){
+        GameState gameState = new GameState(currentMap, new Timestamp(System.currentTimeMillis()), saveText);
         gameStateDao.add(gameState,height, width);
 
     }

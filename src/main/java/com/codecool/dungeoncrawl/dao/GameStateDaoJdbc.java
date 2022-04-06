@@ -21,7 +21,7 @@ public class GameStateDaoJdbc implements GameStateDao {
         try(Connection conn = dataSource.getConnection()){
             String sql = "INSERT INTO game_state (save_text, current_map, saved_at, height, width) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            st.setString(1, state.getPlayer().getPlayerName());
+            st.setString(1, state.getSaveText());
             st.setString(2, state.getCurrentMap());
             st.setTimestamp(3,state.getSavedAt());
             st.setInt(4, height);
@@ -51,7 +51,7 @@ public class GameStateDaoJdbc implements GameStateDao {
                 if (!rs.next()) {
                     return null;
                 }
-                return new GameState(rs.getString(2), rs.getString(1), rs.getTimestamp(3));
+                return new GameState(rs.getString(2),rs.getTimestamp(3), rs.getString(1));
             } catch (SQLException e) {
                 throw new RuntimeException("Error while reading player with name: " + name, e);
             }
