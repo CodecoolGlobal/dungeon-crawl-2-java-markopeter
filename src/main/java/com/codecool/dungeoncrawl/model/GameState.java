@@ -20,15 +20,12 @@ public class GameState extends BaseModel {
     private PlayerModel player;
     private String saveText;
 
-    public GameState(String currentMap, Timestamp savedAt, PlayerModel player) {
-        this.currentMap = currentMap;
-        this.savedAt = savedAt;
-        this.player = player;
-    }
-    public GameState(String currentMap, String saveText,Timestamp savedAt) {
+
+    public GameState(String currentMap,Timestamp savedAt,String saveText) {
         this.currentMap = currentMap;
         this.savedAt = savedAt;
         this.saveText = saveText;
+
     }
 
     public Timestamp getSavedAt() {

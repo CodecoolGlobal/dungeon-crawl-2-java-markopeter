@@ -59,12 +59,13 @@ public class Popup {
                     System.out.println("test save");
                     String stringState = map.convertGameMapToString();
                     try {
-                        map.createTxtForMap(stringState, player.getPlayerName());
+                        map.getPlayer().setName(inputField.getText());
+                        map.createTxtForMap(stringState, map.getPlayer().getName());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    map.getPlayer().setName(inputField.getText());
-                    saveGame.saveGameState(stringState, player, map.getHeight(), map.getWidth());
+
+                    saveGame.saveGameState(stringState, map.getPlayer().getName(), map.getHeight(), map.getWidth());
 
                 }
             }
@@ -73,8 +74,8 @@ public class Popup {
         label.setText(message);
         Button closeButton = new Button("Close ! ");
         closeButton.setOnAction(e -> window.close());
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, closeButton,saveName,saveButton,inputField);
+        VBox layout = new VBox(20);
+        layout.getChildren().addAll(label,inputField,saveName,saveButton,closeButton);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
         window.setScene(scene);
