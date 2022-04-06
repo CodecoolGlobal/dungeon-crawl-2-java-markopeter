@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Objects;
 
 public class Popup {
 
@@ -56,11 +58,15 @@ public class Popup {
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
-                    System.out.println("test save");
                     String stringState = map.convertGameMapToString();
                     try {
                         map.getPlayer().setName(inputField.getText());
-
+                        List<String> allNames = saveGame.allName();
+                        for(String name: allNames){
+                            if(Objects.equals(name, map.getPlayer().getName())){
+                                System.out.println("Test overwrite");
+                            }
+                        }
                         map.createTxtForMap(stringState, map.getPlayer().getName());
                     } catch (IOException e) {
                         e.printStackTrace();
