@@ -143,7 +143,7 @@ public class GameMap {
 
     }
 
-    public void createTxtForMap(String map,String saveName) throws IOException {
+/*    public void createTxtForMap(String map,String saveName) throws IOException {
 
         String pathname = String.format("/home/marko/project/dungeon-crawl-2-java-markopeter/src/main/resources/map%s.txt", saveName);
         File mapFile = new File(pathname);
@@ -154,6 +154,6 @@ public class GameMap {
 
         outputStream.close();
 
-    }
+    }*/
 }
 
