@@ -3,7 +3,9 @@ CREATE TABLE public.game_state (
     id serial NOT NULL PRIMARY KEY,
     current_map text NOT NULL,
     saved_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    save_text text NOT NULL
+    save_text text NOT NULL,
+    height integer NOT NULL ,
+    width integer NOT NULL
 );
 
 DROP TABLE IF EXISTS public.player;

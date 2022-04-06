@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class MapLoader {
     public static GameMap loadMap(String name ) {
         InputStream is = MapLoader.class.getResourceAsStream(String.format("/map%s.txt", name));
+        System.out.println(name);
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
