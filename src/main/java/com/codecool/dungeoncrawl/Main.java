@@ -44,7 +44,66 @@ import java.util.Set;
 import static com.codecool.dungeoncrawl.logic.CellType.FLOOR;
 
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap("1");
+
+    private final String MAP1 = "40 30\n" +
+            "#############                           \n" +
+            "#...........#                           \n" +
+            "#...........#                           \n" +
+            "#......k....#                           \n" +
+            "#...........#                           \n" +
+            "#############    #####################  \n" +
+            "#........s..######.....g......g......#  \n" +
+            "#.s...b........d.....................#  \n" +
+            "#.s.........######.....g......g......#  \n" +
+            "#.....b.....#    #...................#  \n" +
+            "#...........#    #...................#  \n" +
+            "#......s....#    #...................#  \n" +
+            "#####..######    ###..################  \n" +
+            "    #..#           #..#                 \n" +
+            "    #..#           #..#                 \n" +
+            "    #..#          ##..##                \n" +
+            "  ###..####      #......#               \n" +
+            "  #.......#      #......#               \n" +
+            "  #.......#      #......#               \n" +
+            "  #.......#      #......#               \n" +
+            "  #s......#      #......#               \n" +
+            "  #.......#      #......#               \n" +
+            "  #.......#      #..p...#               \n" +
+            "  #.......#      #......#               \n" +
+            "  #...@..s#      #......#               \n" +
+            "  #......s#      #......#               \n" +
+            "  #.......#      #......#               \n" +
+            "  #s......#      #......#               \n" +
+            "  #.......#      #......#               \n" +
+            "  #########       ######                ";
+
+    private final String MAP2 = "44 24\n" +
+            "#####################################\n" +
+            "#.....#....#.#...#........#w#.......#\n" +
+            "###.#.####.#.#.#.#.########.#.#######\n" +
+            "#.#.#....#.#.#.#.#..........#.#.....#\n" +
+            "#.#.####.#.....#.########.###.#.....#\n" +
+            "#.#....#...s...#............#.#.....#\n" +
+            "#.####.##################.###.#####.#\n" +
+            "#....#.#............#.....#.........#\n" +
+            "#....#.####...#############....s....#\n" +
+            "#.####.####.#.#.....................#\n" +
+            "#.#.........#.#.####..#...########..#\n" +
+            "#.#.#########.#....#..#...#.........#####\n" +
+            "#.#....#....#......#..#...#########m#..p#\n" +
+            "#.#....#....######.#..#.......s.....#####\n" +
+            "#.####.#...s.....#.#..#...########..#\n" +
+            "#................#.#..#...#.........#\n" +
+            "######.#.........###..#...########..#\n" +
+            "#......#.....#........#...#......#..#\n" +
+            "#.####.#..s..#........#...#.#..#.#..#\n" +
+            "#.#..........#........#####.#..#.#..#\n" +
+            "#.#..........#........#.....#..#.#..#\n" +
+            "#.##########.#.########.#############\n" +
+            "d@...............#..................#\n" +
+            "#####################################\n";
+
+    GameMap map = MapLoader.loadMap(MAP1);
     int canvasSize = 31;
     Canvas canvas = new Canvas(
             canvasSize * Tiles.TILE_WIDTH,
@@ -106,8 +165,10 @@ public class Main extends Application {
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
-                    String loadName = game.getGameState(map.getPlayer().getName()).getSaveText();
-                    map = MapLoader.loadMap(loadName);
+                    String playerNameRemember = map.getPlayer().getName();
+                    String currentMap = game.getGameState(map.getPlayer().getName()).getCurrentMap();
+                    map = MapLoader.loadMap(currentMap);
+                    map.getPlayer().setName(playerNameRemember);
                     refresh();
                 }
             }
@@ -229,7 +290,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap("2");
+                        map =MapLoader.loadMap(MAP2);
 
                     }
                     refresh();
@@ -240,7 +301,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap("2");
+                        map =MapLoader.loadMap(MAP2);
                     }
                     refresh();
                     break;
@@ -250,7 +311,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap("2");
+                        map =MapLoader.loadMap(MAP2);
                     }
                     refresh();
                     break;
@@ -260,7 +321,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap("2");
+                        map =MapLoader.loadMap(MAP2);
                     }
                     refresh();
                     break;

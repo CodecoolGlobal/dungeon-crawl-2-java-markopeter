@@ -58,12 +58,8 @@ public class Popup {
                     }
                     System.out.println("test save");
                     String stringState = map.convertGameMapToString();
-                    try {
-                        map.getPlayer().setName(inputField.getText());
-                        map.createTxtForMap(stringState, map.getPlayer().getName());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    map.getPlayer().setName(inputField.getText());
+
 
                     saveGame.saveGameState(stringState, map.getPlayer().getName(), map.getHeight(), map.getWidth());
 
