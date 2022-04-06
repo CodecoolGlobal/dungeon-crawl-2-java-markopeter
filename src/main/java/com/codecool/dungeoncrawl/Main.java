@@ -119,38 +119,10 @@ public class Main extends Application {
             }
         });
 
-        saveButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                PlayerModel player = new PlayerModel(map.getPlayer());
-                if(actionEvent.getSource()==saveButton){
-                    GameDatabaseManager saveGame = new GameDatabaseManager();
-
-                    try {
-                        saveGame.setup();
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                    System.out.println("test save");
-                    String stringState = map.convertGameMapToString();
-                    try {
-                        map.createTxtForMap(stringState, player.getPlayerName());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    saveGame.saveGameState(stringState,player,map.getHeight(),map.getWidth());
-
-                }
-            }
-        });
-
-
         inputButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                ui.add(new Label("name: " + inputField.getText()), 0, 0);
-                map.getPlayer().setName(inputField.getText());
-                inputField.setDisable(true);
+                Popup.saveModal("Save game!", "Add your name to save!", map);
             }
         });
 

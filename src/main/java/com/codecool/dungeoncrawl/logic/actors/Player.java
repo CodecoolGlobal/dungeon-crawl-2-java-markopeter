@@ -9,17 +9,10 @@ import java.util.Set;
 public class Player extends Actor {
 
     private HashMap<Items, Integer> itemList = new HashMap<>();
-
     private int health = 10;
     private int damage = 3;
     private boolean onPortal = false;
-
-    public String getName() {
-        return name;
-    }
-
     private String name = "Unknown";
-
     public Player(Cell cell) {
 
         super(cell);
@@ -122,6 +115,9 @@ public class Player extends Actor {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public String getName() {
+        return name;
     }
 
 }
