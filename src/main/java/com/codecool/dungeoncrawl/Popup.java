@@ -64,13 +64,10 @@ public class Popup {
                         List<String> allNames = saveGame.allName();
                         for(String name: allNames){
                             if(Objects.equals(name, map.getPlayer().getName())){
-                                System.out.println("Test overwrite");
+                                overWriteModal("Overwrite", "Would you like to overwrite?");
                             }
                        }
                     map.getPlayer().setName(inputField.getText());
-
-
-
                     saveGame.saveGameState(stringState, map.getPlayer().getName(), map.getHeight(), map.getWidth());
 
                 }
@@ -90,4 +87,24 @@ public class Popup {
         inputField.setDisable(true);
     }
 
+    public static void overWriteModal(String title, String message){
+        Stage overwriteWindow = new Stage();
+        overwriteWindow.initModality(Modality.APPLICATION_MODAL);
+        overwriteWindow.setTitle(title);
+        overwriteWindow.setMinWidth(250);
+        overwriteWindow.setMinHeight(250);
+        Label label = new Label(message);
+        Label saveName = new Label();
+        TextField inputField = new TextField();
+        Button yesButton = new Button("Yes! ");
+        Button noButton = new Button("No !");
+        noButton.setOnAction(e -> overwriteWindow.close());
+        VBox layout = new VBox(30);
+        layout.getChildren().addAll(label,yesButton, noButton);
+        layout.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(layout);
+        overwriteWindow.setScene(scene);
+        overwriteWindow.showAndWait();
+
+    }
 }
