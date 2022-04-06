@@ -71,6 +71,7 @@ public class Main extends Application {
         Button breakButton = new Button();
         Button inputButton = new Button();
         Button saveButton = new Button();
+        Button loadButton = new Button();
         Label nameLabel = new Label("Username");
         TextField inputField = new TextField("Name");
         ProgressBar healthBar = new ProgressBar();
@@ -79,6 +80,7 @@ public class Main extends Application {
         ui.add(nameLabel,0,12);
         ui.add(inputField,0,14);
         ui.add(healthBar,0,18);
+        ui.add(loadButton,0,22);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),
                 (evt) -> {
                 map.moveEnemy();
@@ -86,6 +88,8 @@ public class Main extends Application {
                 }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+        loadButton.setText("Load");
+        loadButton.setFocusTraversable(false);
         saveButton.setText("Save");
         saveButton.setFocusTraversable(false);
         inputButton.setText("Add!");
@@ -97,6 +101,23 @@ public class Main extends Application {
         pickUpButton.setText("Pick up item!");
         pickUpButton.setFocusTraversable(false);
         inputField.setFocusTraversable(false);
+
+        loadButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(actionEvent.getSource()==loadButton){
+                    GameDatabaseManager game = new GameDatabaseManager();
+                    try {
+                        game.setup();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    String loadName = game.getGameState(map.getPlayer().getName()).getSaveText();
+                    map = MapLoader.loadMap(loadName);
+                    refresh();
+                }
+            }
+        });
 
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -117,7 +138,7 @@ public class Main extends Application {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    saveGame.saveGameState(stringState,player);
+                    saveGame.saveGameState(stringState,player,map.getHeight(),map.getWidth());
 
                 }
             }

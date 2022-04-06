@@ -97,6 +97,8 @@ public class GameMap {
 
     public String convertGameMapToString() {
         StringBuilder sb = new StringBuilder();
+        sb.append(width).append(" ").append(height);
+
         for (int y = 0; y < height; y++) {
             sb.append("\n");
             for (int x = 0; x < width; x++) {
@@ -143,7 +145,7 @@ public class GameMap {
 
     public void createTxtForMap(String map,String saveName) throws IOException {
 
-        String pathname = String.format("/home/marko/project/dungeon-crawl-2-java-markopeter/src/main/resources/%s.txt", saveName);
+        String pathname = String.format("/home/marko/project/dungeon-crawl-2-java-markopeter/src/main/resources/map%s.txt", saveName);
         File mapFile = new File(pathname);
 
         FileOutputStream outputStream = new FileOutputStream(pathname);

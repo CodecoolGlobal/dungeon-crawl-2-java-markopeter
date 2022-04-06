@@ -17,13 +17,15 @@ public class GameStateDaoJdbc implements GameStateDao {
 
 
     @Override
-    public void add(GameState state) {
+    public void add(GameState state, int width, int height) {
         try(Connection conn = dataSource.getConnection()){
-            String sql = "INSERT INTO game_state (save_text, current_map, saved_at) VALUES(?, ?, ?)";
+            String sql = "INSERT INTO game_state (save_text, current_map, saved_at, height, width) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, state.getPlayer().getPlayerName());
             st.setString(2, state.getCurrentMap());
             st.setTimestamp(3,state.getSavedAt());
+            st.setInt(4, height);
+            st.setInt(5, width);
             st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
             rs.next();
@@ -39,11 +41,21 @@ public class GameStateDaoJdbc implements GameStateDao {
     public void update(GameState state) {
 
     }
-
     @Override
-    public GameState get(int id) {
-        return null;
-    }
+    public GameState get(String name) {
+            try (Connection conn = dataSource.getConnection()) {
+                String sql = "SELECT save_text, current_map, saved_at FROM game_state WHERE save_text = ?";
+                PreparedStatement st = conn.prepareStatement(sql);
+                st.setString(1, name);
+                ResultSet rs = st.executeQuery();
+                if (!rs.next()) {
+                    return null;
+                }
+                return new GameState(rs.getString(2), rs.getString(1), rs.getTimestamp(3));
+            } catch (SQLException e) {
+                throw new RuntimeException("Error while reading player with name: " + name, e);
+            }
+        }
 
     @Override
     public List<GameState> getAll() {

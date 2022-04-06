@@ -26,10 +26,14 @@ public class GameDatabaseManager {
     }
 
 
-    public void saveGameState(String currentMap, PlayerModel player){
+    public void saveGameState(String currentMap, PlayerModel player,int width, int height){
         GameState gameState = new GameState(currentMap, new Timestamp(System.currentTimeMillis()), player);
-        gameStateDao.add(gameState);
+        gameStateDao.add(gameState,height, width);
 
+    }
+
+    public GameState getGameState(String name) {
+        return gameStateDao.get(name);
     }
 
     public PGSimpleDataSource connect() throws SQLException {
@@ -42,4 +46,9 @@ public class GameDatabaseManager {
         System.out.println("Connection ok.");
         return dataSource;
     }
+
+    public GameStateDao getGameStateDao() {
+        return gameStateDao;
+    }
+
 }
