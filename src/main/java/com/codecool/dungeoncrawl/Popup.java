@@ -59,18 +59,17 @@ public class Popup {
                         throwables.printStackTrace();
                     }
                     String stringState = map.convertGameMapToString();
-                    try {
+
                         map.getPlayer().setName(inputField.getText());
                         List<String> allNames = saveGame.allName();
                         for(String name: allNames){
                             if(Objects.equals(name, map.getPlayer().getName())){
                                 System.out.println("Test overwrite");
                             }
-                        }
-                        map.createTxtForMap(stringState, map.getPlayer().getName());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                       }
+                    map.getPlayer().setName(inputField.getText());
+
+
 
                     saveGame.saveGameState(stringState, map.getPlayer().getName(), map.getHeight(), map.getWidth());
 
