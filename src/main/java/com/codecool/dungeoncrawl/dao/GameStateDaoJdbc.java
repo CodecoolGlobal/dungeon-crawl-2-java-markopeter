@@ -61,4 +61,19 @@ public class GameStateDaoJdbc implements GameStateDao {
     public List<GameState> getAll() {
         return null;
     }
+
+    public List<String> getAllPlayer(String name) {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT save_text FROM game_state ";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+            List<String> saveTexts = new ArrayList<>();
+            while(!rs.next()){
+                saveTexts.add(rs.getString(3));
+            }
+            return saveTexts;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading player with name: " + name, e);
+        }
+    }
+
 }

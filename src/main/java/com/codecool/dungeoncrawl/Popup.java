@@ -60,6 +60,7 @@ public class Popup {
                     String stringState = map.convertGameMapToString();
                     try {
                         map.getPlayer().setName(inputField.getText());
+
                         map.createTxtForMap(stringState, map.getPlayer().getName());
                     } catch (IOException e) {
                         e.printStackTrace();
