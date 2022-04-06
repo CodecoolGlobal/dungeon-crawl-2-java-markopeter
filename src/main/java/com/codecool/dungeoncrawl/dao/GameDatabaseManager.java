@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class GameDatabaseManager {
     private PlayerDao playerDao;
@@ -34,6 +35,9 @@ public class GameDatabaseManager {
 
     public GameState getGameState(String name) {
         return gameStateDao.get(name);
+    }
+    public List<String> allName() {
+        return gameStateDao.getAllPlayer();
     }
 
     public PGSimpleDataSource connect() throws SQLException {

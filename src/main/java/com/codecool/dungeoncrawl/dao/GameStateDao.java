@@ -9,4 +9,5 @@ public interface GameStateDao {
     void update(GameState state);
     GameState get(String name);
     List<GameState> getAll();
+    List<String>getAllPlayer();
 }
