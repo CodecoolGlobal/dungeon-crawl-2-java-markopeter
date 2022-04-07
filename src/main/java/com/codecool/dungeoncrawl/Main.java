@@ -145,10 +145,11 @@ public class Main extends Application {
         ui.add(pickUpButton, 0,14);
         ui.add(breakButton, 0,16);
         ui.add(inputButton, 0, 18);
-        ui.add(healthBar,15,2);
         ui.add(loadButton,0,20);
         ui.add(new Label("Health: "), 0, 2);
+        ui.add(healthLabel, 1,2);
         ui.add(new Label("Damage: "), 0, 4);
+        ui.add(damageLabel, 1,4);
         ui.add(new Label("Inventory: "), 0, 6);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),
                 (evt) -> {
@@ -376,12 +377,7 @@ public class Main extends Application {
     }
 
     public boolean gameEnd(){
-        HashMap<Items, Integer> itemList = map.getPlayer().getItemList();
-        boolean hasClass = itemList.keySet().stream().anyMatch(Swords.class::isInstance);
-        if (hasClass) {
-            return true;
-        }
-        return false;
+        return map.getPlayer().getDamage() > 4;
     }
 
     private void setupDbManager() {
