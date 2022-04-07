@@ -7,8 +7,6 @@ import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Items;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Swords;
-import com.codecool.dungeoncrawl.model.GameState;
-import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,7 +20,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -33,15 +30,15 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.print.attribute.standard.Media;
+import java.applet.AudioClip;
 import java.io.File;
-import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
-
 import static com.codecool.dungeoncrawl.logic.CellType.FLOOR;
+import static javafx.scene.paint.Color.WHITE;
 
 public class Main extends Application {
 
@@ -130,20 +127,9 @@ public class Main extends Application {
         Button breakButton = new Button();
         Button inputButton = new Button();
         Button loadButton = new Button();
-        Label nameLabel = new Label("Username");
+        pickUpButton.setId("pickup");
         ProgressBar healthBar = new ProgressBar();
         healthBar.setProgress(1);
-
-        ui.add(nameLabel,0,12);
-        ui.add(healthBar,0,18);
-        ui.add(loadButton,0,22);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),
-                (evt) -> {
-                map.moveEnemy();
-                refresh();
-                }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
         loadButton.setText("Load");
         loadButton.setFocusTraversable(false);
         inputButton.setText("Click to save!");
@@ -154,6 +140,47 @@ public class Main extends Application {
         pushButton.setFocusTraversable(false);
         pickUpButton.setText("Pick up item!");
         pickUpButton.setFocusTraversable(false);
+        ui.setPrefWidth(300);
+        ui.setPadding(new Insets(10));
+        ui.add(pushButton, 0,12);
+        ui.add(pickUpButton, 0,14);
+        ui.add(breakButton, 0,16);
+        ui.add(inputButton, 0, 18);
+        ui.add(healthBar,15,2);
+        ui.add(loadButton,0,20);
+        ui.add(new Label("Health: "), 0, 2);
+        ui.add(new Label("Damage: "), 0, 4);
+        ui.add(new Label("Inventory: "), 0, 6);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),
+                (evt) -> {
+                    map.moveEnemy();
+                    refresh();
+                }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+        int inventoryItemStartCoordinate = 8;
+        for(Label label: inventorySlots){
+            ui.add(label, 0, inventoryItemStartCoordinate);
+            label.setText("empty");
+            inventoryItemStartCoordinate += 2;
+        }
+
+        BorderPane borderPane = new BorderPane();
+
+        borderPane.setCenter(canvas);
+        borderPane.setRight(ui);
+
+        Scene scene = new Scene(borderPane);
+        scene.getStylesheets().add((getClass().getResource("/application.css")).toExternalForm());
+        primaryStage.setScene(scene);
+        refresh();
+        scene.setOnKeyPressed(this::onKeyPressed);
+        scene.setOnKeyReleased(this::onKeyReleased);
+        primaryStage.setTitle("Dungeon Crawl");
+        primaryStage.show();
+        Popup.display("Welcome on board !", "Greetings traveler ! Dont get be confused by your " +
+                "little sword, you stand no chance against this dungeon mighty creatures !");
+
 
         loadButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -192,6 +219,7 @@ public class Main extends Application {
                 addItemsToUI();
             }
         });
+        
         pushButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -214,60 +242,29 @@ public class Main extends Application {
                 boolean hasClass = itemList.keySet().stream().anyMatch(Swords.class::isInstance);
                 if (hasClass) {
 
-                if (Objects.equals(map.getCell(x + 1, y).getTileName(), "wall")
-                ) {
-                    map.getCell(x + 1, y).setType(FLOOR);
-                    refresh();
-                } else if (Objects.equals(map.getCell(x - 1, y).getTileName(), "wall")
-                ) {
-                    map.getCell(x - 1, y).setType(FLOOR);
-                    refresh();
-                }
-                else if (Objects.equals(map.getCell(x , y + 1).getTileName(), "wall")
-                ) {
-                    map.getCell(x, y + 1).setType(FLOOR);
-                    refresh();
-                }
-                else if (Objects.equals(map.getCell(x , y -1).getTileName(), "wall")
-                ) {
-                    map.getCell(x - 1, y + 1).setType(FLOOR);
-                    refresh();
+                    if (Objects.equals(map.getCell(x + 1, y).getTileName(), "wall")
+                    ) {
+                        map.getCell(x + 1, y).setType(FLOOR);
+                        refresh();
+                    } else if (Objects.equals(map.getCell(x - 1, y).getTileName(), "wall")
+                    ) {
+                        map.getCell(x - 1, y).setType(FLOOR);
+                        refresh();
+                    }
+                    else if (Objects.equals(map.getCell(x , y + 1).getTileName(), "wall")
+                    ) {
+                        map.getCell(x, y + 1).setType(FLOOR);
+                        refresh();
+                    }
+                    else if (Objects.equals(map.getCell(x , y -1).getTileName(), "wall")
+                    ) {
+                        map.getCell(x - 1, y + 1).setType(FLOOR);
+                        refresh();
+                    }
                 }
             }
-        }
         });
-        ui.setPrefWidth(300);
-        ui.setPadding(new Insets(10));
-        ui.add(pushButton, 0,10);
-        ui.add(pickUpButton, 0,6);
-        ui.add(breakButton, 0,8);
-        ui.add(inputButton, 0, 16);
-        ui.add(new Label("Health: "), 0, 1);
-        ui.add(new Label("Damage: "), 0, 2);
-        ui.add(new Label("Inventory: "), 0, 3);
-        ui.add(healthLabel, 1, 1);
-        ui.add(damageLabel, 1, 2);
-        int inventoryItemStartCoordinate = 4;
-        for(Label label: inventorySlots){
-            ui.add(label, 0, inventoryItemStartCoordinate);
-            label.setText("empty");
-            inventoryItemStartCoordinate++;
-        }
 
-        BorderPane borderPane = new BorderPane();
-
-        borderPane.setCenter(canvas);
-        borderPane.setRight(ui);
-
-        Scene scene = new Scene(borderPane);
-        primaryStage.setScene(scene);
-        refresh();
-        scene.setOnKeyPressed(this::onKeyPressed);
-        scene.setOnKeyReleased(this::onKeyReleased);
-        primaryStage.setTitle("Dungeon Crawl");
-        primaryStage.show();
-        Popup.display("Welcome on board !", "Greetings traveler ! Dont get be confused by your " +
-                "little sword, you stand no chance against this dungeon mighty creatures !");
     }
 
     private void onKeyReleased(KeyEvent keyEvent) {
