@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,12 +47,15 @@ public class Popup {
         Label saveName = new Label();
         TextField inputField = new TextField();
         Button saveButton = new Button("Save ! ");
+        GameState gs = new GameState(map.convertGameMapToString(), new Timestamp(System.currentTimeMillis()), map.getPlayer().getName());
+        PlayerModel player = new PlayerModel(map.getPlayer());
+        gs.setPlayer(player);
         saveButton.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                PlayerModel player = new PlayerModel(map.getPlayer());
                 if (actionEvent.getSource() == saveButton) {
                     GameDatabaseManager saveGame = new GameDatabaseManager();
+                    boolean overWritten = false;
 
                     try {
                         saveGame.setup();
@@ -60,16 +64,21 @@ public class Popup {
                     }
                     String stringState = map.convertGameMapToString();
 
-                        map.getPlayer().setName(inputField.getText());
-                        List<String> allNames = saveGame.allName();
-                        for(String name: allNames){
-                            if(Objects.equals(name, map.getPlayer().getName())){
-                                overWriteModal("Overwrite", "Would you like to overwrite?");
-                            }
-                       }
                     map.getPlayer().setName(inputField.getText());
-                    saveGame.saveGameState(stringState, map.getPlayer().getName(), map.getHeight(), map.getWidth());
-
+                    List<String> allNames = saveGame.allName();
+                    for(String name: allNames){
+                        if(Objects.equals(name, map.getPlayer().getName())){
+                            GameState currentGs = new GameState(map.convertGameMapToString(), new Timestamp(System.currentTimeMillis()), map.getPlayer().getName());
+                            PlayerModel cPlayer = new PlayerModel(map.getPlayer());
+                            currentGs.setPlayer(cPlayer);
+                            overWriteModal("Overwrite", "Would you like to overwrite?", currentGs, new PlayerModel(map.getPlayer()));
+                            overWritten = true;
+                        }
+                   }
+                    if(!overWritten){
+                        saveGame.saveGameState(stringState, map.getPlayer().getName(), map.getHeight(), map.getWidth());
+                        saveGame.savePlayer(map.getPlayer());
+                    }
                 }
             }
         });
@@ -87,7 +96,7 @@ public class Popup {
         inputField.setDisable(true);
     }
 
-    public static void overWriteModal(String title, String message){
+    public static void overWriteModal(String title, String message, GameState gs, PlayerModel pm){
         Stage overwriteWindow = new Stage();
         overwriteWindow.initModality(Modality.APPLICATION_MODAL);
         overwriteWindow.setTitle(title);
@@ -98,6 +107,19 @@ public class Popup {
         TextField inputField = new TextField();
         Button yesButton = new Button("Yes! ");
         Button noButton = new Button("No !");
+        yesButton.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                GameDatabaseManager gdm = new GameDatabaseManager();
+                try {
+                    gdm.setup();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                gdm.overwriteGameState(gs,pm);
+                overwriteWindow.close();
+            }
+            });
         noButton.setOnAction(e -> overwriteWindow.close());
         VBox layout = new VBox(30);
         layout.getChildren().addAll(label,yesButton, noButton);

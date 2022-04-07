@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.dao;
 
+import com.codecool.dungeoncrawl.logic.actors.Items;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
@@ -9,6 +10,7 @@ import javax.sql.DataSource;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 public class GameDatabaseManager {
@@ -32,6 +34,23 @@ public class GameDatabaseManager {
         gameStateDao.add(gameState,height, width);
 
     }
+
+    public void overwriteGameState(GameState gs, PlayerModel pm){
+        gameStateDao.update(gs);
+        playerDao.update(pm);
+    }
+
+     public HashMap<Items, Integer> getPlayerInventory(String playerName){
+        return playerDao.getInventoryFromSql(playerName);
+     }
+
+     public int getPlayerHealth(String playerName){
+        return playerDao.getPlayerHealthFromSql(playerName);
+     }
+
+     public int getPlayerDamage(String playerName){
+        return playerDao.getPlayerDamageFromSql(playerName);
+     }
 
     public GameState getGameState(String name) {
         return gameStateDao.get(name);
