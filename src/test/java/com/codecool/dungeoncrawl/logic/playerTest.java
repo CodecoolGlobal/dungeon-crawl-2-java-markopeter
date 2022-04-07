@@ -8,8 +8,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import static com.codecool.dungeoncrawl.logic.CellType.FLOOR;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 public class playerTest {
     private GameMap map = new GameMap(5,5, FLOOR);
@@ -38,6 +37,17 @@ public class playerTest {
         player.addToInventory(swords);
         boolean actual = player.getItemList().containsKey(swords);
         assertTrue(actual);
+    }
+
+    @Test
+    void playerGetTileName_returnFalse (){
+        //Arrange
+        Player player = new Player(cell);
+        player.setHealth(-11);
+        //Act
+        boolean actual = player.isAlive();
+        //Assert
+        assertFalse(actual);
     }
 
 }
