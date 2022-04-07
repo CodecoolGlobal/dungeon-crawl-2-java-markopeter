@@ -40,24 +40,32 @@ public class Player extends Actor {
 
     @Override
     public void checkForCollision(int dx, int dy){
-        Cell nextCell = super.getCell().getNeighbor(dx, dy);
-
-        if(nextCell.getType() == CellType.DOOR){
-            if(hasThatKey(CellType.DOOR.getItemFunction())){
-                move(nextCell);
-            }
-        }else if(nextCell.getType() == CellType.PORTAL){
-            onPortal = true;
-        }
-        else if(!(nextCell.getType() == CellType.WALL)){
-            if(nextCell.getActor() == null){
-                move(nextCell);
-            }else{
-                fight(super.getCell().getActor(), nextCell.getActor());
-                checkForCollision(-dx,-dy);
-            }
+        Cell nextCell = super.getCell().getNeighbor(0,0);
+        boolean isOffMap = false;
+        try{
+            nextCell = super.getCell().getNeighbor(dx, dy);
+        }catch (ArrayIndexOutOfBoundsException e){
+            isOffMap = true;
         }
 
+
+        if(!isOffMap){
+            if(nextCell.getType() == CellType.DOOR){
+                if(hasThatKey(CellType.DOOR.getItemFunction())){
+                    move(nextCell);
+                }
+            }else if(nextCell.getType() == CellType.PORTAL){
+                onPortal = true;
+            }
+            else if(!(nextCell.getType() == CellType.WALL)){
+                if(nextCell.getActor() == null){
+                    move(nextCell);
+                }else{
+                    fight(super.getCell().getActor(), nextCell.getActor());
+                    checkForCollision(-dx,-dy);
+                }
+            }
+        }
     }
 
     @Override
