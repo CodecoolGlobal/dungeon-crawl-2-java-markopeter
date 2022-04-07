@@ -27,8 +27,17 @@ public class playerTest {
         boolean actual = player.hasThatKey(keyName);
         //Assert
         assertEquals(expected, actual);
-
-
+    }
+    @Test
+    void testAddItemToInventory_setDamage(){
+        //Arrange
+        Player player = new Player(cell);
+        Swords swords = new Swords(cell);
+        player.addToInventory(swords);
+        //Act
+        player.addToInventory(swords);
+        boolean actual = player.getItemList().containsKey(swords);
+        assertTrue(actual);
     }
 
 }
