@@ -6,8 +6,11 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import java.util.HashMap;
 import java.util.Set;
 
-public class Player extends Actor {
+import static com.codecool.dungeoncrawl.model.SoundAndMusic.playSound;
 
+
+public class Player extends Actor {
+    public String fightSound = "/mixkit-arcade-retro-jump-223.wav";
     private HashMap<Items, Integer> itemList = new HashMap<>();
     private int health = 10;
     private int damage = 3;
@@ -61,6 +64,7 @@ public class Player extends Actor {
                 if(nextCell.getActor() == null){
                     move(nextCell);
                 }else{
+                    playSound(fightSound);
                     fight(super.getCell().getActor(), nextCell.getActor());
                     checkForCollision(-dx,-dy);
                 }

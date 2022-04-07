@@ -29,14 +29,18 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import javax.print.attribute.standard.Media;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 import static com.codecool.dungeoncrawl.logic.CellType.FLOOR;
+import static com.codecool.dungeoncrawl.model.SoundAndMusic.opening;
+import static com.codecool.dungeoncrawl.model.SoundAndMusic.playSound;
 import static javafx.scene.paint.Color.WHITE;
 
 public class Main extends Application {
@@ -111,7 +115,7 @@ public class Main extends Application {
     Label slot1 = new Label();
     Label slot2 = new Label();
     Label[] inventorySlots = {slot1,slot2};
-
+    ProgressBar healthBar = new ProgressBar();
 
     public static void main(String[] args) {
         launch(args);
@@ -119,6 +123,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        playSound(opening);
         setupDbManager();
         GridPane ui = new GridPane();
         Button pickUpButton = new Button();
@@ -127,7 +132,6 @@ public class Main extends Application {
         Button inputButton = new Button();
         Button loadButton = new Button();
         pickUpButton.setId("pickup");
-        ProgressBar healthBar = new ProgressBar();
         healthBar.setProgress(1);
         loadButton.setText("Load");
         loadButton.setFocusTraversable(false);
@@ -140,17 +144,18 @@ public class Main extends Application {
         pickUpButton.setText("Pick up item!");
         pickUpButton.setFocusTraversable(false);
         ui.setPrefWidth(300);
-        ui.setPadding(new Insets(10));
+        ui.setPadding(new Insets(20));
         ui.add(pushButton, 0,12);
         ui.add(pickUpButton, 0,14);
         ui.add(breakButton, 0,16);
         ui.add(inputButton, 0, 18);
         ui.add(loadButton,0,20);
-        ui.add(new Label("Health: "), 0, 2);
+        ui.add(healthBar,0,0);
+        ui.add(new Label("Health:"), 0, 2);
         ui.add(healthLabel, 1,2);
-        ui.add(new Label("Damage: "), 0, 4);
+        ui.add(new Label("Damage:"), 0, 4);
         ui.add(damageLabel, 1,4);
-        ui.add(new Label("Inventory: "), 0, 6);
+        ui.add(new Label("Inventory:"), 0, 6);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),
                 (evt) -> {
                     map.moveEnemy();
@@ -180,7 +185,6 @@ public class Main extends Application {
         primaryStage.show();
         Popup.display("Welcome on board !", "Greetings traveler ! Dont get be confused by your " +
                 "little sword, you stand no chance against this dungeon mighty creatures !");
-
 
         loadButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -379,6 +383,9 @@ public class Main extends Application {
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
         damageLabel.setText("" + map.getPlayer().getDamage());
+        int health = map.getPlayer().getHealth();
+        float healthFloat = (float) health;
+        healthBar.setProgress(healthFloat / 10);
         if(!map.getPlayer().isAlive()){
             healthLabel.setText("Dead!");
         }
@@ -405,4 +412,5 @@ public class Main extends Application {
         }
         System.exit(0);
     }
+
 }
