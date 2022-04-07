@@ -14,7 +14,7 @@ public abstract class Actor implements Drawable {
         this.cell.setActor(this);
     }
 
-      void move(Cell nextCell) {
+     public void move(Cell nextCell) {
         cell.setActor(null);
         nextCell.setActor(this);
         cell = nextCell;
@@ -33,7 +33,7 @@ public abstract class Actor implements Drawable {
         }
     }
 
-    private void takeDamage(int damageAmount){
+    public void takeDamage(int damageAmount){
         setHealth(-damageAmount);
     }
 
