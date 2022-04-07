@@ -32,5 +32,16 @@ public class MinotaurTest {
         assertEquals(expected,actual);
 
     }
+    @Test
+    void setDamage_ChangeIntDamage(){
+        Cell cell = new Cell(map,2,2, FLOOR);
+        Minotaur minotaur = new Minotaur(cell);
+        minotaur.setDamage(0);
+        minotaur.setDamage(3);
+        int actual = minotaur.getDamage();
+        int expected = 3;
+        assertEquals(expected,actual);
+
+    }
 
 }
