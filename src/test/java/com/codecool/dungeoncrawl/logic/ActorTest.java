@@ -12,7 +12,7 @@ class ActorTest {
     @Test
     void moveUpdatesCells() {
         Player player = new Player(gameMap.getCell(1, 1));
-        player.checkForCollision(1, 0);
+        player.move(player.getCell().getNeighbor(1,0));
 
         assertEquals(2, player.getX());
         assertEquals(1, player.getY());
@@ -40,15 +40,49 @@ class ActorTest {
     }
 
     @Test
-    void cannotMoveIntoAnotherActor() {
+    void cannotMoveIntoAnotherActor() {     //Player gets kicked back by 1 unit in the event of collision
         Player player = new Player(gameMap.getCell(1, 1));
         Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1));
         player.checkForCollision(1, 0);
 
-        assertEquals(1, player.getX());
+        assertEquals(0, player.getX());
         assertEquals(1, player.getY());
         assertEquals(2, skeleton.getX());
         assertEquals(1, skeleton.getY());
         assertEquals(skeleton, gameMap.getCell(2, 1).getActor());
+    }
+
+    @Test
+    void fightingActorsTakeDamage(){
+        Player player = new Player(gameMap.getCell(1, 1));
+        Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1));
+        int healthOfAttackerBeforeFight = player.getHealth();
+        int healthOfAttackedBeforeFight = skeleton.getHealth();
+        player.fight(player,skeleton);
+        int healthOfAttackerAfterFight = player.getHealth();
+        int healthOfAttackedAfterFight = skeleton.getHealth();
+        assertTrue(healthOfAttackedAfterFight < healthOfAttackedBeforeFight && healthOfAttackerAfterFight < healthOfAttackerBeforeFight);
+    }
+
+    @Test
+    void actorTakesDamage(){
+        Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1));
+        int healthBeforeDamage = skeleton.getHealth();
+        skeleton.takeDamage(2);
+        int healthAfterDamage = skeleton.getHealth();
+        assertTrue(healthBeforeDamage > healthAfterDamage);
+    }
+
+    @Test
+    public void actorIsAlivePositive(){
+        Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1));
+        assertTrue(skeleton.isAlive());
+    }
+
+    @Test
+    public void actorIsAliveNegative(){
+        Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1));
+        skeleton.takeDamage(skeleton.getHealth()+1);
+        assertFalse(skeleton.isAlive());
     }
 }
