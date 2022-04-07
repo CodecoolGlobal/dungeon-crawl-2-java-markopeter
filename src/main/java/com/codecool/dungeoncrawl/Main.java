@@ -194,6 +194,9 @@ public class Main extends Application {
                     String playerNameRemember = map.getPlayer().getName();
                     String currentMap = game.getGameState(map.getPlayer().getName()).getCurrentMap();
                     map = MapLoader.loadMap(currentMap);
+                    map.getPlayer().setDamage(game.getPlayerDamage(playerNameRemember));
+                    map.getPlayer().setHealth(game.getPlayerHealth(playerNameRemember)-map.getPlayer().getHealth());
+                    map.getPlayer().setItemList(game.getPlayerInventory(playerNameRemember));
                     map.getPlayer().setName(playerNameRemember);
                     refresh();
                 }

@@ -10,7 +10,8 @@ public interface PlayerDao {
     void add(PlayerModel player);
     void update(PlayerModel player);
     PlayerModel get(int id);
-    HashMap<Items, Integer> getInventoryFromSql(int id);
-    int getPlayerHealthFromSql(int id);
+    HashMap<Items, Integer> getInventoryFromSql(String name);
+    int getPlayerHealthFromSql(String name);
+    int getPlayerDamageFromSql(String name);
     List<PlayerModel> getAll();
 }
