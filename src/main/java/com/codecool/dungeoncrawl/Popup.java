@@ -68,7 +68,10 @@ public class Popup {
                     List<String> allNames = saveGame.allName();
                     for(String name: allNames){
                         if(Objects.equals(name, map.getPlayer().getName())){
-                            overWriteModal("Overwrite", "Would you like to overwrite?", gs, new PlayerModel(map.getPlayer()));
+                            GameState currentGs = new GameState(map.convertGameMapToString(), new Timestamp(System.currentTimeMillis()), map.getPlayer().getName());
+                            PlayerModel cPlayer = new PlayerModel(map.getPlayer());
+                            currentGs.setPlayer(cPlayer);
+                            overWriteModal("Overwrite", "Would you like to overwrite?", currentGs, new PlayerModel(map.getPlayer()));
                             overWritten = true;
                         }
                    }

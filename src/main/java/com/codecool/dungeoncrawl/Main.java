@@ -290,7 +290,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap(MAP2);
+                        nextLevelAndRestorePlayerStats();
 
                     }
                     refresh();
@@ -301,7 +301,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap(MAP2);
+                        nextLevelAndRestorePlayerStats();
                     }
                     refresh();
                     break;
@@ -311,7 +311,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap(MAP2);
+                        nextLevelAndRestorePlayerStats();
                     }
                     refresh();
                     break;
@@ -321,7 +321,7 @@ public class Main extends Application {
                         if(gameEnd()){
                             exit();
                         }
-                        map =MapLoader.loadMap(MAP2);
+                        nextLevelAndRestorePlayerStats();
                     }
                     refresh();
                     break;
@@ -332,6 +332,14 @@ public class Main extends Application {
             }
         }
 
+    }
+
+    private void nextLevelAndRestorePlayerStats(){
+        int playerHealth = map.getPlayer().getHealth();
+        int playerDamage = map.getPlayer().getDamage();
+        map =MapLoader.loadMap(MAP2);
+        map.getPlayer().setDamage(playerDamage);
+        map.getPlayer().setHealth(playerHealth-map.getPlayer().getHealth());
     }
 
     private void addItemsToUI(){
