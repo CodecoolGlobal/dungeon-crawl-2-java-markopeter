@@ -56,14 +56,12 @@ public class Popup {
                 if (actionEvent.getSource() == saveButton) {
                     GameDatabaseManager saveGame = new GameDatabaseManager();
                     boolean overWritten = false;
-
                     try {
                         saveGame.setup();
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
                     String stringState = map.convertGameMapToString();
-
                     map.getPlayer().setName(inputField.getText());
                     List<String> allNames = saveGame.allName();
                     for(String name: allNames){

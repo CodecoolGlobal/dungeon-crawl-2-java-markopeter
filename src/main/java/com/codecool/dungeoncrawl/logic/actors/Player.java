@@ -10,7 +10,7 @@ import static com.codecool.dungeoncrawl.model.SoundAndMusic.playSound;
 
 
 public class Player extends Actor {
-    public String fightSound = "/mixkit-arcade-retro-jump-223.wav";
+    public String fightSound = "/66352853.wav";
     private HashMap<Items, Integer> itemList = new HashMap<>();
     private int health = 10;
     private int damage = 3;
