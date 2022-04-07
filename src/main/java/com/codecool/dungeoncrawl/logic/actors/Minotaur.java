@@ -70,4 +70,8 @@ public class Minotaur extends Actor{
         }
         return minotaurCoordinates;
     }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
 }
