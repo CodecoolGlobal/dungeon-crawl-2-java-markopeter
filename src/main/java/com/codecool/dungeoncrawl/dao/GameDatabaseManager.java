@@ -33,6 +33,11 @@ public class GameDatabaseManager {
 
     }
 
+    public void overwriteGameState(GameState gs, PlayerModel pm){
+        gameStateDao.update(gs);
+        playerDao.update(pm);
+    }
+
     public GameState getGameState(String name) {
         return gameStateDao.get(name);
     }

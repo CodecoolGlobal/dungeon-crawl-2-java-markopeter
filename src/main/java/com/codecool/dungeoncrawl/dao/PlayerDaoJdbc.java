@@ -21,7 +21,7 @@ public class PlayerDaoJdbc implements PlayerDao {
     public void add(PlayerModel player) {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "INSERT INTO player (player_name, hp, x, y, dmg, " +
-                    "inventorySlot1Item, inventorySlot1Amount, inventorySlot2Item, inventorySlot2Amount) " +
+                    "inventory_slot_1_item, inventory_slot_1_amount, inventory_slot_2_item, inventory_slot_2_amount) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, player.getPlayerName());
@@ -44,6 +44,22 @@ public class PlayerDaoJdbc implements PlayerDao {
 
     @Override
     public void update(PlayerModel player) {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "UPDATE player SET  hp = ?,  x = ?, y = ?, dmg = ?, inventory_slot_1_item = ?, inventory_slot_1_amount = ?, inventory_slot_2_item = ?, inventory_slot_2_amount = ?  WHERE player_name = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, player.getHp());
+            statement.setInt(2, player.getX());
+            statement.setInt(3, player.getY());
+            statement.setInt(4,player.getDmg());
+            statement.setString(5, player.getInventorySlot1());
+            statement.setInt(6,player.getInventorySlot1Amount());
+            statement.setString(7, player.getInventorySlot2());
+            statement.setInt(8,player.getInventorySlot2Amount());
+            statement.setString(9, player.getPlayerName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -55,8 +71,8 @@ public class PlayerDaoJdbc implements PlayerDao {
     @Override
     public HashMap<Items, Integer> getInventoryFromSql(int id){
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT inventorySlot1Item, inventorySlot1Amount, " +
-                    "inventorySlot2Item, inventorySlot2Amount FROM player WHERE id = ?";
+            String sql = "SELECT inventory_slot_1_item, inventory_slot_1_amount, " +
+                    "inventory_slot_2_item, inventory_slot_2_amount FROM player WHERE id = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
