@@ -197,6 +197,7 @@ public class Main extends Application {
                         throwables.printStackTrace();
                     }
                     String playerNameRemember = map.getPlayer().getName();
+                    System.out.println(playerNameRemember);
                     String currentMap = game.getGameState(map.getPlayer().getName()).getCurrentMap();
                     map = MapLoader.loadMap(currentMap);
                     map.getPlayer().setDamage(game.getPlayerDamage(playerNameRemember));
@@ -341,7 +342,9 @@ public class Main extends Application {
     private void nextLevelAndRestorePlayerStats(){
         int playerHealth = map.getPlayer().getHealth();
         int playerDamage = map.getPlayer().getDamage();
+        String playerName = map.getPlayer().getName();
         map =MapLoader.loadMap(MAP2);
+        map.getPlayer().setName(playerName);
         map.getPlayer().setDamage(playerDamage);
         map.getPlayer().setHealth(playerHealth-map.getPlayer().getHealth());
     }
